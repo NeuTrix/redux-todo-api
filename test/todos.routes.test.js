@@ -8,7 +8,7 @@ let chai = require('chai');
 let expect = chai.expect;
 let should = chai.should();
 
-let Todos = require('../models/Todos.model');
+let Todos = require('../models/todos.model');
 
 chai.use(chaiHttp);
 
@@ -105,7 +105,7 @@ describe('Routes for /todos resources', () => {
 				chai.request(server)
 					.put('/api/todos/' + todo.id)
 					.send({
-						task: 'Test Task:  Hitting ANOTHER',
+						task: 'Test Task:  Update Item',
 						completed: true,
 						owner: 'Johara Bell',
 					})
@@ -116,7 +116,7 @@ describe('Routes for /todos resources', () => {
 						expect(res.body).to.have.property('_id');
 						expect(res.body._id).to.equal(oldId);
 						expect(res.body).to.have.property('task');
-						expect(res.body.task).to.eql('Hitting ANOTHER');
+						expect(res.body.task).to.eql('Test Task:  Update Item');
 						expect(res.body).to.have.property('owner');
 						expect(res.body.owner).to.eql('Johara Bell');
 						expect(res.body).to.have.property('completed');
