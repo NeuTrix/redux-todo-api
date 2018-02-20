@@ -1,4 +1,4 @@
-let Todos = require('../models/Todos.model');
+let Todos = require('../models/todos.model');
 let _ = require('lodash');
 let Promise = require('bluebird');
 let faker = require('faker');
