@@ -33,6 +33,7 @@ const Clear =() => {
 
 // ========= The Seed Module
 
+
 const Seed = (count) => {
 
 _.times(count,() => {
@@ -41,8 +42,8 @@ _.times(count,() => {
 		task: faker.lorem.sentence(),
 		details: faker.lorem.paragraph(),
 		rank: faker.random.number(5),
-		date: new Date(),
-		comp: faker.random.boolean()
+		date: faker.date.future(),
+		completed: faker.random.boolean()
 	};
 
 	let _todo = new Todos(_task)
