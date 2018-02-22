@@ -41,7 +41,7 @@ _.times(count,() => {
 		owner: faker.name.lastName(),
 		task: faker.lorem.sentence(),
 		details: faker.lorem.paragraph(),
-		rank: faker.random.number(5),
+		rank: faker.random.arrayElement(['High', 'Med', 'Low']),
 		date: faker.date.future(),
 		completed: faker.random.boolean()
 	};
