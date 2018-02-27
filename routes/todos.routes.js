@@ -86,9 +86,9 @@ router.delete('/:id', (req, res) => {
 		} else {
 			let response = {
 				ok: 1,
-				message: "Successfully deleted todo item with id: " + id
+				message: "Successfully deleted. No content. Todo item with id: " + id
 			}
-			res.status(200).send(response);
+			res.status(204).send(response);
 		}
 	})
 });
