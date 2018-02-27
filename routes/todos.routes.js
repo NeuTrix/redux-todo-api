@@ -74,23 +74,57 @@ router.put('/:id', (req, res) => {
 	});
 }); 
 
-// ========= DELETE an existing todo item
+// // ========= DELETE an existing todo item
+// router.delete('/:id', (req, res) => {
+
+// 	let id = req.params.id;
+// 	let message = {
+// 				ok: 1,
+// 				text: ("Successfully deleted. No content. Todo item with id: " + id)
+// 			}
+
+// 	Todos.remove(
+// 		{ "_id": id }, (err, todo) => {
+
+// 		if(err) {
+// 			res.status(500).send(err);
+// 		} else {
+// 			res.status(204).send(message);
+// 		}
+// 	})
+// });
+
+
 router.delete('/:id', (req, res) => {
 
-	let id = req.params.id;
+	Todos.findByIdAndRemove(req.params.id, (error, todo) => {
 
-	Todos.remove({ "_id": id }, (err, todo) => {
-
-		if(err) {
-			res.status(500).send(err);
+		if(error) {
+			return res.status(500).send(err)
 		} else {
-			let response = {
-				ok: 1,
-				message: "Successfully deleted. No content. Todo item with id: " + id
+			let message = {
+				text: `The todo with id ${todo._id} has been deleted`
 			}
-			res.status(204).send(response);
+			console.log("***it's gone")
+			return res.status(200).send(message.text);
 		}
-	})
+
+
+		// if (err) {
+		// 	return res.status(500).send('hi') 
+		// } else {
+	// return res.send(response.message)
+			// return res.status(204).send(response);
+		// }
+
+	});
+
+	
+
+
 });
+
+
+
 
 module.exports = router;
