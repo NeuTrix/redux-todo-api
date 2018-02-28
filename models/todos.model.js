@@ -9,7 +9,7 @@ var TodoSchema = new Schema({
 	},
 	date: Date,
 	details: String,
-	owner: String,
+	owner: { String, default: "Prince T'Challa"}
 	rank: String,
 	task: {
 		type: String,

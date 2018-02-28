@@ -32,14 +32,14 @@ router.post('/', (req, res) => {
 // ========= * READ a specific todo item
 router.get('/:id', (req, res) => {
 
-	let id = req.params.id;
-
-	Todos.findById({ "_id": id }, (err, todo) => {
-		if(err) {
-			res.status(500).send(err);
-		} else {
-			res.status(200).send(todo);
-		}
+	Todos.findById(
+		req.params.id, 
+		(err, todo) => {
+			if(err) {
+				res.status(500).send(err);
+			} else {
+				res.status(200).send(todo);
+			}
 	});
 });
 
@@ -55,7 +55,8 @@ router.put ('/:id', (req, res) => {
 			if(err) {
 				res.status(500).send(err);
 			}
-				res.status(200).send(todo);
+				res.status(200).send(
+					todo);
 		});
 	}
 );
