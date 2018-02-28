@@ -44,34 +44,23 @@ router.get('/:id', (req, res) => {
 });
 
 // ========= * UPDATE a specific item
-router.put('/:id', (req, res) => {
+router.put ('/:id', (req, res) => {
 
-	let id = req.params.id;
+		Todos.findByIdAndUpdate (
+			req.params.id, 
+			req.body, 
+			{ new: true }, 
+			(err, todo ) => {
 
-	Todos.findById({ "_id": id }, (err, todo) => {
+			if(err) {
+				res.status(500).send(err);
+			}
+				res.status(200).send(todo);
+		});
+	}
+);
 
-		if(err) {
-			res.status(500).send(err);
-
-		} else {
-			todo.owner 	 = req.body.owner	 	|| todo.owner;
-			todo.task		 = req.body.task 	 	|| todo.task;
-			todo.details = req.body.details	|| todo.details;
-			todo.rank 	 = req.body.rank		|| todo.rank;
-			todo.date 	 = req.body.date		|| todo.date;
-			todo.completed 	= req.body.completed || todo.completed;
-
-			todo.save((err, _todo) => {
-				if(err) {
-					res.status(500).send(err);
-				} 
-					res.status(200).send(_todo);
-			});
-		}
-	});
-});
-
-// ========= * UPDATE a specific item
+// ========= * DELETE a specific item
 router.delete('/:id', (req, res) => {
 
 	Todos.findByIdAndRemove(req.params.id, (error, todo) => {
