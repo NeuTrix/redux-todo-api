@@ -11,37 +11,16 @@ let passport = require('passport')
 let path = require('path');
 
 // +++++++++ Routes  +++++++++ 
-
 let index = require('./routes/index');
 let todos = require('./routes/todos');
-let users = require('./routes/users');
+// +++++++++   +++++++++ 
+// let users = require('./routes/users');
 
 let app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
-
-// +++++++++ mongoose  +++++++++ 
-
-// +++++++++  test db 
-// let mongoDB = 'mongodb://Tester:test2015@ds239117.mlab.com:39117/todo-test-db';
-
-// +++++++++ default db  
-let mongoDB = 'mongodb://Tester:test2015@ds135537.mlab.com:35537/react-redux-todo';
-
-// establish pending connection to db
-mongoose.connect(mongoDB);
-// use the global Promise library
-// mongoose.Promise = global.Promise;
-// default connection
-let db = mongoose.connection;
-
-db.on('error', console.error.bind(console, 'connection error:'));
-
-// db.once('open', function() {
-// console.log("we're connected!");
-// });
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -66,13 +45,35 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', index);
 app.use('/api', index);
 app.use('/api/todos', todos);
-app.use('/api/users', users);
+// +++++++++   +++++++++ 
+// app.use('/api/users', users);
 
-// +++++++++ passport config  +++++++++ 
+// +++++++++ passport config +++++++++
+/*var Account = require('.models/account') 
 passport.use(new LocalStrategy(Account.authenticate()));
 passport.serializeUser(Account.serializeUser());
 passport.deserializeUser(Account.deserializeUser());
+*/
+// +++++++++ mongoose +++++++++ 
+// default db  
+let mongoDB = 'mongodb://Tester:test2015@ds135537.mlab.com:35537/react-redux-todo';
 
+// test db 
+// let mongoDB = 'mongodb://Tester:test2015@ds239117.mlab.com:39117/todo-test-db';
+
+// establish pending connection to db
+mongoose.connect(mongoDB);
+// use the global Promise library
+// mongoose.Promise = global.Promise;
+
+// default connection
+let db = mongoose.connection;
+
+db.on('error', console.error.bind(console, 'connection error:'));
+
+// db.once('open', function() {
+// console.log("we're connected!");
+// });
 
 // +++++++++ error handling  +++++++++ 
 
@@ -104,7 +105,7 @@ app.use(function(err, req, res, next) {
 });
 
 // +++++++++ prior handler  +++++++++ 
-/*app.use(function(err, req, res, next) {
+app.use(function(err, req, res, next) {
 // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
@@ -112,6 +113,6 @@ app.use(function(err, req, res, next) {
   // render the error page
   res.status(err.status || 500);
   res.render('error');
-});*/
+});
 
 module.exports = app;

@@ -1,6 +1,5 @@
 /* eslint-env node, mocha, chai, jest */
 
-
 let server = require('../app');
 let mongoose = require('mongoose');
 
