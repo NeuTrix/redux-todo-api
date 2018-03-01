@@ -123,7 +123,6 @@ describe('Routes for /todos resources', () => {
 						expect(res.body).to.have.property('completed');
 						// expect(res.body.test).to.eql(false);
 						expect(res.body).to.be.an('object');
-
 					});
 						done();		
 			});
@@ -131,7 +130,7 @@ describe('Routes for /todos resources', () => {
 	});
 
 	// =========== DELETE a specific todo  
-	describe.only('*** DELETE a specific todo: "/todos/:id" route', () => {
+	describe('*** DELETE a specific todo: "/todos/:id" route', () => {
 
 		it(' can delete an item', (done) => {
 			

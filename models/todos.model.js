@@ -14,9 +14,9 @@ var TodoSchema = new Schema({
 	task: {
 		type: String,
 		default: "Making the world better",
-		required: [ true, "Please add a Task" ]
+		required: [ 
+		true, "Please add a Task" ]
 	},
-
 });
 
 // create a Model
