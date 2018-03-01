@@ -1,12 +1,12 @@
 /* eslint-env node, mocha */
 let express = require('express');
 let router = express.Router();
-let Todos = require('../models/todos.model');
+let Todo = require('../models/todo.model');
 
 // ========== * READ a list of all todos
 router.get('/', (req, res) => {
 	// res.send('the GET/ rte');
-	Todos.find({ },(err, todos) => {
+	Todo.find({ },(err, todos) => {
 		if(err) {
 			res.status(500).send(err);
 		} else {
@@ -18,7 +18,7 @@ router.get('/', (req, res) => {
 // ========= * CREATE a new todo item
 router.post('/', (req, res) => {
 
-	let _todo = new Todos(req.body);
+	let _todo = new Todo(req.body);
 
 	_todo.save((err, todo) => {
 		if(err) {
@@ -32,7 +32,7 @@ router.post('/', (req, res) => {
 // ========= * READ a specific todo item
 router.get('/:id', (req, res) => {
 
-	Todos.findById(
+	Todo.findById(
 		req.params.id, 
 		(err, todo) => {
 			if(err) {
@@ -46,7 +46,7 @@ router.get('/:id', (req, res) => {
 // ========= * UPDATE a specific item
 router.put ('/:id', (req, res) => {
 
-		Todos.findByIdAndUpdate (
+		Todo.findByIdAndUpdate (
 			req.params.id, 
 			req.body, 
 			{ new: true }, 
@@ -64,7 +64,7 @@ router.put ('/:id', (req, res) => {
 // ========= * DELETE a specific item
 router.delete('/:id', (req, res) => {
 
-	Todos.findByIdAndRemove(req.params.id, (error, todo) => {
+	Todo.findByIdAndRemove(req.params.id, (error, todo) => {
 
 		if(error) {
 			return res.status(500).send(err)

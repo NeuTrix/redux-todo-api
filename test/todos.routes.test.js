@@ -8,11 +8,11 @@ let chai = require('chai');
 let expect = chai.expect;
 let should = chai.should();
 
-let Todos = require('../models/todos.model');
+let Todo = require('../models/todo.model');
 
 chai.use(chaiHttp);
 
-xdescribe('Routes for /todos resources', () => {
+xdescribe('Routes for /todo resources', () => {
 
 	const _task = {
 		task: 'Test Task: Hitting that route, yo!',
@@ -21,23 +21,23 @@ xdescribe('Routes for /todos resources', () => {
 	};
 
 	/*beforeEach((done) => {
-		Todos.remove({ },(err) => {
+		Todo.remove({ },(err) => {
 			err ? console.error.bind(console) : console.log('DB cleared');
 			done();
 		});
 	}); */
 
 	/*after((done) => {
-		Todos.remove({ },(err) => {
+		Todo.remove({ },(err) => {
 			err ? console.error.bind(console) : console.log('DB cleared');
 			done();
 		});
 	});*/
 
-	// =========== READ an index of all todos
-	describe('*** READ index of all todos: "/todos" route', () => {
+	// =========== READ an index of all todo
+	describe('*** READ index of all todo: "/todos" route', () => {
 
-		it('... returns a list of all current todos', (done) => {
+		it('... returns a list of all current todo', (done) => {
 
 			chai.request(server)
 				.get('/api/todos')
@@ -73,7 +73,7 @@ xdescribe('Routes for /todos resources', () => {
 	// =========== FIND a specific todo item
 	xdescribe('*** READ a specific todo item: "/todos/:id" route', () => {
 		it('... can find a specific todo item', (done) => {
-			let _todo = new Todos(_task);
+			let _todo = new Todo(_task);
 			let testTask;
 
 			_todo.save((err, todo) => {
@@ -97,7 +97,7 @@ xdescribe('Routes for /todos resources', () => {
 	describe('*** UPDATE a specific todo: "/todos/:id" route', () => {
 		it('... can update an item', (done) => {
 
-			let _todo = new Todos(_task);
+			let _todo = new Todo(_task);
 			let oldId = _todo._id.toString();
 
 			_todo.save((err, todo) => {
@@ -133,7 +133,7 @@ xdescribe('Routes for /todos resources', () => {
 
 		it(' can delete an item', (done) => {
 			
-			let _todo = new Todos(_task);
+			let _todo = new Todo(_task);
 
 			_todo.save((err, todo) => {
 
