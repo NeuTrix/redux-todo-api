@@ -13,7 +13,7 @@ let Todos = require('../models/todos.model');
 
 chai.use(chaiHttp);
 
-describe('Routes for /todos resources', () => {
+xdescribe('Routes for /todos resources', () => {
 
 	const _task = {
 		task: 'Test Task: Hitting that route, yo!',

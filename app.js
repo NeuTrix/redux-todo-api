@@ -1,5 +1,4 @@
 /* eslint-env node, es6, JSX */
-
 let express = require('express');
 let cors = require('cors');
 
