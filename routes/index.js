@@ -1,4 +1,6 @@
 let express = require('express');
+let passport = require('passport');
+let Account = require('../models/account');
 let router = express.Router();
 
 /* GET home page. */
@@ -30,7 +32,7 @@ router.get('/login', function(req, res) {
 	res.render('login', { user: req.user });
 })
 
-router.post('/login', function(req, res) {
+router.post('/login', passport.authenticate('local'), function(req, res) {
 	res.redirect('/');
 })
 

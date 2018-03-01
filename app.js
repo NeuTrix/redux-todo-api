@@ -13,7 +13,6 @@ let path = require('path');
 // +++++++++ Routes  +++++++++ 
 let index = require('./routes/index');
 let todos = require('./routes/todos');
-// +++++++++   +++++++++ 
 let users = require('./routes/users');
 
 let app = express();
@@ -31,7 +30,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-// +++++++++   +++++++++ 
 // ??? passport tutorial 
 app.use(require('express-session')({
 	secret: 'monkey ball',
@@ -46,10 +44,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', index);
 app.use('/api', index);
 app.use('/api/todos', todos);
-// +++++++++   +++++++++ 
 app.use('/api/users', users);
 
-// +++++++++   +++++++++ 
 // +++++++++ passport config +++++++++
 var Account = require('./models/account') 
 passport.use(new LocalStrategy(Account.authenticate()));
@@ -107,7 +103,7 @@ app.use(function(err, req, res, next) {
 });
 
 // +++++++++ prior handler  +++++++++ 
-app.use(function(err, req, res, next) {
+/*app.use(function(err, req, res, next) {
 // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
@@ -116,5 +112,6 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+*/
 
 module.exports = app;
