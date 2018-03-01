@@ -14,7 +14,7 @@ let path = require('path');
 let index = require('./routes/index');
 let todos = require('./routes/todos');
 // +++++++++   +++++++++ 
-// let users = require('./routes/users');
+let users = require('./routes/users');
 
 let app = express();
 
@@ -46,14 +46,15 @@ app.use('/', index);
 app.use('/api', index);
 app.use('/api/todos', todos);
 // +++++++++   +++++++++ 
-// app.use('/api/users', users);
+app.use('/api/users', users);
 
+// +++++++++   +++++++++ 
 // +++++++++ passport config +++++++++
-/*var Account = require('.models/account') 
+var Account = require('.models/account') 
 passport.use(new LocalStrategy(Account.authenticate()));
 passport.serializeUser(Account.serializeUser());
 passport.deserializeUser(Account.deserializeUser());
-*/
+
 // +++++++++ mongoose +++++++++ 
 // default db  
 let mongoDB = 'mongodb://Tester:test2015@ds135537.mlab.com:35537/react-redux-todo';
