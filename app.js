@@ -47,7 +47,7 @@ app.use('/', index);
 app.use('/api', index);
 app.use('/api/todos', todos);
 // +++++++++   +++++++++ 
-// app.use('/api/users', users);
+app.use('/api/users', users);
 
 // +++++++++   +++++++++ 
 // +++++++++ passport config +++++++++

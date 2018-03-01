@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-var passportLocalMongoose = require(passport-local-mongoose)
+// var passportLocalMongoose = require(passport-local-mongoose)
 
 // create a Schema (alpha sort props)
 var UerSchema = new Schema({
