@@ -1,8 +1,9 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+var passportLocalMongoose = require(passport-local-mongoose)
 
 // create a Schema (alpha sort props)
-var TodoSchema = new Schema({
+var UerSchema = new Schema({
 	completed: {
 		type: Boolean,
 		default: false
@@ -20,4 +21,4 @@ var TodoSchema = new Schema({
 });
 
 // create a Model
-module.exports = mongoose.models.Todos || mongoose.model('Todos', TodoSchema);
+module.exports = mongoose.models.Todos || mongoose.model('Todos', UerSchema);
