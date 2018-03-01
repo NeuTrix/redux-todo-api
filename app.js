@@ -14,7 +14,7 @@ let path = require('path');
 let index = require('./routes/index');
 let todos = require('./routes/todos');
 // +++++++++   +++++++++ 
-let users = require('./routes/users');
+// let users = require('./routes/users');
 
 let app = express();
 
@@ -31,29 +31,31 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
+// +++++++++   +++++++++ 
 // ??? passport tutorial 
-app.use(require('express-session')({
+/*app.use(require('express-session')({
 	secret: 'monkey ball',
 	resave: false,
 	saveUninitialized: false
 }));
 app.use(passport.initialize());
 app.use(passport.session());
-
+*/
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 app.use('/api', index);
 app.use('/api/todos', todos);
 // +++++++++   +++++++++ 
-app.use('/api/users', users);
+// app.use('/api/users', users);
 
 // +++++++++   +++++++++ 
 // +++++++++ passport config +++++++++
-var Account = require('.models/account') 
+/*var Account = require('.models/account') 
 passport.use(new LocalStrategy(Account.authenticate()));
 passport.serializeUser(Account.serializeUser());
 passport.deserializeUser(Account.deserializeUser());
+*/
 
 // +++++++++ mongoose +++++++++ 
 // default db  
