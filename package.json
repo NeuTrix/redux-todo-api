@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "nodemon ./bin/www",
-    "test": "clear && mocha -w"
+    "test": "make test"
   },
   "dependencies": {
     "bluebird": "^3.5.1",
