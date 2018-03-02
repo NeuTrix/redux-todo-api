@@ -4,11 +4,12 @@ let cookieParser = require('cookie-parser');
 let cors = require('cors');
 let express = require('express');
 let favicon = require('serve-favicon');
-let LocalStrategy = require('passport-local').Strategy
 let logger = require('morgan');
 let mongoose = require('mongoose');
-let passport = require('passport')
 let path = require('path');
+// +++++++++ passport  +++++++++ 
+let LocalStrategy = require('passport-local').Strategy
+let passport = require('passport')
 
 // +++++++++ Routes  +++++++++ 
 let index = require('./routes/index');

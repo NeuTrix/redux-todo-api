@@ -1,49 +1,59 @@
 #!/usr/bin/env node
-
-/**
- * Module dependencies.
- */
+// +++++++++ https- secure server  +++++++++ 
 
 var app = require('../app');
 var debug = require('debug')('testapi:server');
-var http = require('http');
+// +++++++++ ??? +++++++++ 
+// var express = require('express');
+var fs = require('fs');
+// var http = require('http'); // assuming this will be turned off
+var https = require('https');
+var path = require('path');
+var key = fs.readFileSync(path.resolve('./key.pem'));
+var cert = fs.readFileSync(path.resolve('./cert.pem'));
+var https_options = {
+  key: key,
+  cert: cert
+};
+
+// +++++++++ Get PORT from environment and store in Express:
+var PORT = normalizePort(process.env.PORT || '3003');
+app.set('PORT', PORT);
+
+var HOST = 'localhost';
+
+// +++++++++ ??? secure server +++++++++ 
+/*app.configure(function(){
+  app.use(app.router);
+})*/
+
+// +++++++++ Create HTTP server
+// var server = http.createServer(app);
+var server = https.createServer(https_options, app)
 
 /**
- * Get port from environment and store in Express.
+ * Listen on provided PORT, on all network interfaces.
  */
 
-var port = normalizePort(process.env.PORT || '3003');
-app.set('port', port);
-
-/**
- * Create HTTP server.
- */
-
-var server = http.createServer(app);
-
-/**
- * Listen on provided port, on all network interfaces.
- */
-
-server.listen(port);
+server.listen(PORT);
 server.on('error', onError);
 server.on('listening', onListening);
 
 /**
- * Normalize a port into a number, string, or false.
+ * Normalize a PORT into a number, string, or false.
  */
 
 function normalizePort(val) {
-  var port = parseInt(val, 10);
+  var PORT = parseInt(val, 10);
 
-  if (isNaN(port)) {
+  if (isNaN(PORT)) {
     // named pipe
     return val;
   }
 
-  if (port >= 0) {
-    // port number
-    return port;
+  if (PORT >= 0) {
+    // PORT number
+    return PORT;
   }
 
   return false;
@@ -58,9 +68,9 @@ function onError(error) {
     throw error;
   }
 
-  var bind = typeof port === 'string'
-    ? 'Pipe ' + port
-    : 'Port ' + port;
+  var bind = typeof PORT === 'string'
+    ? 'Pipe ' + PORT
+    : 'Port ' + PORT;
 
   // handle specific listen errors with friendly messages
   switch (error.code) {
@@ -82,10 +92,10 @@ function onError(error) {
  */
 
 function onListening() {
-  console.log('starting server on port : ', port)
+  console.log('starting server on PORT : ', PORT)
   var addr = server.address();
   var bind = typeof addr === 'string'
     ? 'pipe ' + addr
-    : 'port ' + addr.port;
+    : 'PORT ' + addr.PORT;
   debug('Listening on ' + bind);
 }
