@@ -1,82 +1,60 @@
 /* eslint-env node, mocha */
 let express = require('express');
 let router = express.Router();
+let Validator = require('validator');
+let isEmpty = require('lodash/isEmpty')
+
 let User = require('../models/user.model');
 
-// ========== * READ a list of all users
-router.get('/', (req, res) => {
-	// res.send('the GET/ rte');
-	User.find({ },(err, users) => {
-		if(err) {
-			res.status(500).send(err);
-		} else {
-			res.status(200).send(users);
-		}
-	});
-});
+/*function validateInput(data) {
+	let errors = { };
 
-// ========= * CREATE a new user item
-router.post('/', (req, res) => {
+	if (Validator.isNull(data.username)) {
+		errors.username = 'This field is required'
+	} 
 
-	let _user = new User(req.body);
-
-	_user.save((err, user) => {
-		if(err) {
-			res.status(500).send(err);
-		} else {
-			res.status(201).send(user);
-		}
-	});
-});
-
-// ========= * READ a specific user item
-router.get('/:id', (req, res) => {
-
-	User.findById(
-		req.params.id, 
-		(err, user) => {
-			if(err) {
-				res.status(500).send(err);
-			} else {
-				res.status(200).send(user);
-			}
-	});
-});
-
-// ========= * UPDATE a specific item
-router.put ('/:id', (req, res) => {
-
-		User.findByIdAndUpdate (
-			req.params.id, 
-			req.body, 
-			{ new: true }, 
-			(err, user ) => {
-
-			if(err) {
-				res.status(500).send(err);
-			}
-				res.status(200).send(
-					user);
-		});
+	if (Validator.isNull(data.email)) {
+		errors.email = 'Email format is invalid'
 	}
-);
 
-// ========= * DELETE a specific item
-router.delete('/:id', (req, res) => {
+	if (!Validator.isEmail(data.email)) {
+		errors.email = 'This field is required'
+	}
 
-	User.findByIdAndRemove(req.params.id, (error, user) => {
+	if (Validator.isNull(data.emailConfirm)) {
+		errors.emailConfirm = 'This field is required'
+	}
 
-		if(error) {
-			return res.status(500).send(err)
-		} else {
-			let message = {
-				text: `The user with id ${user._id} has been deleted`
-			}
-			console.log("***it's gone")
-			return res.status(200).send(message.text);
-		}
-	});
+	if (Validator.isNull(data.password)) {
+		errors.password = 'This field is required'
+	}
 
-});
+	if (Validator.isNull(data.passwordConfirm)) {
+		errors.passwordConfirm = 'This field is required'
+	}
+
+	if (!Validator.equals(data.password, data.passwordConfirm)) {
+		errors.passwordConfirm = 'Passwords must matc'
+	}
+
+	return { 
+		errors,
+		isValid: isEmpty(errors)
+	}
+}*/
+
+router.get('/', (req, res) => {
+	res.send("Hey Mikey!")
+})
+
+router.post('/', (req, res) => {
+	const { errors } = validateInput(req.body);
+
+	if (!isValid) {
+		res.status(400).json(errors);
+	}
+})
+
+
 
 module.exports = router;

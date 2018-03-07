@@ -39,7 +39,7 @@ describe ('Account', () => {
 			});
 		});
 
-		afterEach(() => {
+		afterEach((done) => {
 			Account.remove({}, () => {
 				done();
 			});
