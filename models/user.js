@@ -15,4 +15,4 @@ var UserSchema = new Schema({
 UserSchema.plugin(passportLocalMongoose);
 
 // create a Model
-module.exports = mongoose.models.Todos || mongoose.model('User', UserSchema);
+module.exports = mongoose.models.User || mongoose.model('User', UserSchema);

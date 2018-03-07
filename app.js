@@ -47,10 +47,10 @@ app.use('/api/todos', todos);
 app.use('/api/users', users);
 
 // +++++++++ passport config +++++++++
-var Account = require('./models/account') 
-passport.use(new LocalStrategy(Account.authenticate()));
-passport.serializeUser(Account.serializeUser());
-passport.deserializeUser(Account.deserializeUser());
+var User = require('./models/user') 
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 // +++++++++ mongoose +++++++++ 
 // default db  
