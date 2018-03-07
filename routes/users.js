@@ -1,7 +1,7 @@
 /* eslint-env node, mocha */
 let express = require('express');
 let router = express.Router();
-let User = require('../models/user.model');
+let User = require('../models/user');
 
 // ========== * READ a list of all users
 router.get('/', (req, res) => {

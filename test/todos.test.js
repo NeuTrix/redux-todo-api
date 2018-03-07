@@ -21,9 +21,8 @@ xdescribe('Routes for /todo resources', () => {
 	};
 
 	beforeEach((done) => {
-		mongoose.connection.db.dropDatabase()
-		});
-	}); 
+		mongoose.connection.db.dropDatabase();
+	});
 
 	after((done) => {
 		Todo.remove({ },(err) => {
@@ -44,7 +43,7 @@ xdescribe('Routes for /todo resources', () => {
 					expect(res.body).to.be.an('array');
 					expect(res.body.length).to.be.above(0);
 				});
-					done();
+			done();
 		});
 	});
 
@@ -64,7 +63,7 @@ xdescribe('Routes for /todo resources', () => {
 					expect(res.body).to.have.property('_id');
 					expect(res.body._id).to.be.a('string');
 				}); 	
-					done();
+			done();
 		}); 
 	});
 		
@@ -121,7 +120,7 @@ xdescribe('Routes for /todo resources', () => {
 						// expect(res.body.test).to.eql(false);
 						expect(res.body).to.be.an('object');
 					});
-						done();		
+				done();		
 			});
 		});
 	});
@@ -145,7 +144,7 @@ xdescribe('Routes for /todo resources', () => {
 						expect(res.text).to.exist;
 						// expect(res).to.have.property('message').eql('The todo with id 5a95d10d26deea15d4e9b8a1 has been deleted');
 						done();
-					})
+					});
 			});
 		});
 	});
