@@ -12,7 +12,7 @@ let Todo = require('../models/todo.model');
 
 chai.use(chaiHttp);
 
-describe('Routes for /todo resources', () => {
+xdescribe('Routes for /todo resources', () => {
 
 	const _task = {
 		task: 'Test Task: Hitting that route, yo!',
@@ -21,9 +21,7 @@ describe('Routes for /todo resources', () => {
 	};
 
 	beforeEach((done) => {
-		Todo.remove({ },(err) => {
-			err ? console.error.bind(console) : console.log('DB cleared');
-			done();
+		mongoose.connection.db.dropDatabase()
 		});
 	}); 
 
