@@ -6,7 +6,7 @@ let isEmpty = require('lodash/isEmpty')
 
 let User = require('../models/user.model');
 
-/*function validateInput(data) {
+function validateInput(data) {
 	let errors = { };
 
 	if (Validator.isNull(data.username)) {
@@ -41,7 +41,7 @@ let User = require('../models/user.model');
 		errors,
 		isValid: isEmpty(errors)
 	}
-}*/
+}
 
 router.get('/', (req, res) => {
 	res.send("Hey Mikey!")
