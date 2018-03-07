@@ -12,7 +12,7 @@ let Todo = require('../models/todo.model');
 
 chai.use(chaiHttp);
 
-xdescribe('Routes for /todo resources', () => {
+describe('Routes for /todo resources', () => {
 
 	const _task = {
 		task: 'Test Task: Hitting that route, yo!',
@@ -20,19 +20,19 @@ xdescribe('Routes for /todo resources', () => {
 		completed: false
 	};
 
-	/*beforeEach((done) => {
+	beforeEach((done) => {
 		Todo.remove({ },(err) => {
 			err ? console.error.bind(console) : console.log('DB cleared');
 			done();
 		});
-	}); */
+	}); 
 
-	/*after((done) => {
+	after((done) => {
 		Todo.remove({ },(err) => {
 			err ? console.error.bind(console) : console.log('DB cleared');
 			done();
 		});
-	});*/
+	});
 
 	// =========== READ an index of all todo
 	describe('*** READ index of all todo: "/todos" route', () => {
