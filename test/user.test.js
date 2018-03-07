@@ -4,12 +4,9 @@ let chai = require('chai');
 let expect = require('chai').expect;
 let User = require('../models/user');
 
-describe ('User property validations', () => {
-		let user // define a user instance
+describe ('User empty property validations', () => {
+		let user = new User()// define a user instance
 
-		before(() => {
-		 user = new User();
-		});
 	it ('... should be invalid if username is empty', (done) => {
 		user.validate((err) => {
 			expect(err.errors.username).to.exist;
@@ -31,4 +28,30 @@ describe ('User property validations', () => {
 		});
 	});
 
+
+});
+
+xdescribe ('User populated prop validations', () => {
+
+	/*let user1 = new User({
+		username: 'BlackPantherLives',
+		email: 'blackpanther@wakanda.com',
+		password: 'BlackPantherLives'
+	})*/
+
+
+	xit ('... does not allow a duplicate user name', (done) => {
+		let user2 = new User({
+			username: 'BlackPantherLives',
+			email: 'blackpanther@wakanda.com',
+			password: 'KillmongerRules'
+		})
+
+		user2.validate((err) => {
+			expect(err.errors.username).not.to.exist;
+			done()
+		});
+		
+
+	});
 });
