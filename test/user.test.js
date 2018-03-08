@@ -40,7 +40,7 @@ xdescribe ('User populated prop validations', () => {
 	})*/
 
 
-	xit ('... does not allow a duplicate user name', (done) => {
+	it ('... does not allow a duplicate user name', (done) => {
 		let user2 = new User({
 			username: 'BlackPantherLives',
 			email: 'blackpanther@wakanda.com',
