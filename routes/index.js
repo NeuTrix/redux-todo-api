@@ -15,6 +15,8 @@ router.get('/register', function(req, res) {
 })
 
 router.post('/register', function(req, res, next) {
+
+
 	User.register(
 		new User({ 
 			username: req.body.username,
@@ -23,7 +25,8 @@ router.post('/register', function(req, res, next) {
 		req.body.password,
 		function(err, account) {
 			if (err) {
-				return res.render('register', { error : err.message });
+			// return res.status(500).send(err.message).render('register', { error : err.message });
+			return res.render('register', { error : err.message });
 			}
 			
 		passport.authenticate('local')(req, res, function() {
@@ -31,7 +34,9 @@ router.post('/register', function(req, res, next) {
 				if (err) {
 					return next(err);
 				}
-				res.redirect('/');
+				// res.redirect('/');
+			res.status(201).send(res.user).redirect('/');
+
 			});
 		});
 	});
