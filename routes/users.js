@@ -43,8 +43,11 @@ function validateInput(data) {
 	if (validator.isEmpty(data.email)) {
 		errors.email = 'This field is required';
 	}
-
-	if (!validator.isEmail(data.email)) {
+	
+	if (
+			!validator.isEmpty(data.email) &&
+			!validator.isEmail(data.email)
+		) {
 		errors.email = 'Your email Format is invalid';
 	}
 	
@@ -60,12 +63,12 @@ function validateInput(data) {
 		errors.password = 'This field is required';
 	}
 
-	if (!validator.equals(data.password, data.passwordConfirm)) {
-		errors.passwordConfirm = 'Passwords do not match'
-	}
-	
 	if (validator.isEmpty(data.passwordConfirm)) {
 		errors.passwordConfirm = 'This field is required';
+	}
+
+	if (!validator.equals(data.password, data.passwordConfirm)) {
+		errors.passwordConfirm = 'Passwords do not match'
 	}
 
 	return {
