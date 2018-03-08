@@ -27,8 +27,6 @@ describe ('User empty property validations', () => {
 			done()
 		});
 	});
-
-
 });
 
 xdescribe ('User populated prop validations', () => {
@@ -38,7 +36,6 @@ xdescribe ('User populated prop validations', () => {
 		email: 'blackpanther@wakanda.com',
 		password: 'BlackPantherLives'
 	})*/
-
 
 	it ('... does not allow a duplicate user name', (done) => {
 		let user2 = new User({
@@ -51,7 +48,5 @@ xdescribe ('User populated prop validations', () => {
 			expect(err.errors.username).not.to.exist;
 			done()
 		});
-		
-
 	});
 });

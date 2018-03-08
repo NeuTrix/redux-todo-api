@@ -32,41 +32,42 @@ router.get('/', (req, res) => {
 	});
 });*/
 
-
-
 router.post('/', function(req, res, next) {
 
 	const { errors, isValid } = validateInput(req.body);
 
 	if (!isValid) {
-		res.status(400).json(errors);
-	}
-
-	User.register(
-		new User({ 
-			username: req.body.username,
-			email: req.body.email,
-		}),
-		req.body.password,
-		function(err, account) {
-			if (err) {
-			// return res.render('register', { error : err.message });
-			// resp for cli and api
-			return res.status(500).send(err.message).render('register', { error : err.message });
-			}
-			
-		passport.authenticate('local')(req, res, function() {
-			req.session.save(function(err){
+		res.status(400).json(errors)
+	} else {
+		User.register(
+			new User({ 
+				username: req.body.username,
+				email: req.body.email,
+			}),
+			req.body.password,
+			function(err, account) {
 				if (err) {
-					return next(err);
+				// return res.render('register', { error : err.message });
+				// resp for cli and api
+				// return res.status(500).send(err.message)
+				res.render('register', { error : err.message });
 				}
-			// res.redirect('/');
-			// resp for cli and api
-			res.status(201).send(res.user).redirect('/');
+				
+			passport.authenticate('local')(req, res, function() {
+				req.session.save(function(err){
+					if (err) {
+						return next(err);
+					}
+				// res.redirect('/');
+				// resp for cli and api
+				res.redirect('/');
+				res.status(201).send(res.user)
 
+				});
 			});
 		});
-	});
+	}
+	
 });
 
 // ========= * READ a specific user item
@@ -84,7 +85,7 @@ router.get('/:id', (req, res) => {
 });
 
 // ========= * UPDATE a specific item
-router.put ('/:id', (req, res) => {
+router.put('/:id', (req, res) => {
 
 		User.findByIdAndUpdate (
 			req.params.id, 

@@ -1,8 +1,6 @@
 /* eslint-env node, mocha */
-let Validator = require('validator');
+let validator = require('validator');
 let isEmpty = require('lodash/isEmpty')
-
-let User = require('../models/user');
 
 function validateInput(data) {
 	let errors = { };
