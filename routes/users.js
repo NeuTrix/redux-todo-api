@@ -90,8 +90,9 @@ router.post('/', function(req, res, next) {
 		req.body.password,
 		function(err, account) {
 			if (err) {
-			// return res.status(500).send(err.message).render('register', { error : err.message });
-			return res.render('register', { error : err.message });
+			// return res.render('register', { error : err.message });
+			// resp for cli and api
+			return res.status(500).send(err.message).render('register', { error : err.message });
 			}
 			
 		passport.authenticate('local')(req, res, function() {
@@ -99,7 +100,8 @@ router.post('/', function(req, res, next) {
 				if (err) {
 					return next(err);
 				}
-				// res.redirect('/');
+			// res.redirect('/');
+			// resp for cli and api
 			res.status(201).send(res.user).redirect('/');
 
 			});
