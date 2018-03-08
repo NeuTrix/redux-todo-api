@@ -1,4 +1,5 @@
 let Todos = require('../models/todo.model');
+let Users = require('../models/user');
 let _ = require('lodash');
 let Promise = require('bluebird');
 let faker = require('faker');
@@ -27,7 +28,10 @@ const Close = () => {
 const Clear =() => {
 	db.models = { }
 	Todos.remove({ },(err) => {
-			err ? console.error.bind(console) : console.log('DB cleared');
+			err ? console.error.bind(console) : console.log('Todos DB cleared');
+		});
+	Users.remove({ },(err) => {
+			err ? console.error.bind(console) : console.log('Users DB cleared');
 		});
 	console.log("********** db Cleared ******")
 }

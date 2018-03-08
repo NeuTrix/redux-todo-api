@@ -1,8 +1,11 @@
 /* eslint-env node, mocha */
 let express = require('express');
 let passport = require('passport');
-let router = express.Router();
 let User = require('../models/user');
+let Validator = require('validator');
+let isEmpty = require('lodash/isEmpty');
+
+let router = express.Router();
 
 // ========== * READ a list of all users
 router.get('/', (req, res) => {
@@ -30,7 +33,22 @@ router.get('/', (req, res) => {
 	});
 });*/
 
+function validateInput(data) {
+	let errors = { };
+
+	return {
+		errors,
+		isValid: isEmpty(errors)
+	}
+}
+
 router.post('/', function(req, res, next) {
+
+	const { errors, isValid } = validateInput(req.body);
+
+	if (!isValid) {
+		res.status(400).json(errors);
+	}
 
 	User.register(
 		new User({ 
