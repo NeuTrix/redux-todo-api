@@ -20,7 +20,7 @@ router.get('/', (req, res) => {
 });
 
 // ========= * CREATE a new user item
-/*router.post('/', (req, res) => {
+router.post('/', (req, res) => {
 
 	let _user = new User(req.body);
 
@@ -31,18 +31,36 @@ router.get('/', (req, res) => {
 			res.status(201).send(user);
 		}
 	});
-});*/
+});
 
 
+/*router.post(
+	'/', 
 
 
+	function(req, res, next) {
+
+		User.register(
+
+			new User({ 
+				username: req.body.username,
+				email: req.body.email,
+			}),
+			// req.body.password,
+		)	
+
+	passport.authenticate('local'),
+			res.send('hitt the route')
+
+});
+*/
 
 
 
 
 // +++++++++   +++++++++ 
 
-router.post('/', function (req, res, next) {
+/*router.post('/', function (req, res, next) {
 
 	const { errors, isValid } = validateInput(req.body);
 
@@ -87,7 +105,7 @@ router.post('/', function (req, res, next) {
 			} // func 2
 		); //register
 	} //else 1
-}); //post, func 1
+}); //post, func 1*/
 
 // +++++++++   +++++++++ 
 
