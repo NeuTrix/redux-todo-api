@@ -2,10 +2,10 @@
 /* eslint-env node, mocha */
 let express = require('express');
 let passport = require('passport');
-let User = require('../models/user');
 let validateInput = require('../helpers/signupValidator')
-
 let router = express.Router();
+
+let User = require('../models/user');
 
 // ========== * READ a list of all users
 router.get('/', (req, res) => {
@@ -20,40 +20,27 @@ router.get('/', (req, res) => {
 });
 
 // ========= * CREATE a new user item
+// new and save are preferable to create for control flow
+// ... a safety route without validation or authetication ...
 router.post('/', (req, res) => {
 
-	let _user = new User(req.body);
+	// validate the request body
+	// create a new user
+	let user = new User(req.body);
 
-	_user.save((err, user) => {
-		if(err) {
-			res.status(500).send(err);
+	// validate a save to the database
+	user.save((err) => {
+		if (err) {
+			// handle error if not
+			res.status(501).send(err)
 		} else {
-			res.status(201).send(user);
+			// return the new user if saved
+			res.status(201).send(user)
 		}
-	});
+	});	
+
+	// authenticate the user with a hashed password
 });
-
-
-/*router.post(
-	'/', 
-
-
-	function(req, res, next) {
-
-		User.register(
-
-			new User({ 
-				username: req.body.username,
-				email: req.body.email,
-			}),
-			// req.body.password,
-		)	
-
-	passport.authenticate('local'),
-			res.send('hitt the route')
-
-});
-*/
 
 
 
