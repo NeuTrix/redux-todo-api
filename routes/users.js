@@ -26,22 +26,30 @@ router.get('/', (req, res) => {
 // ... a safety route without validation or authetication ...
 
 router.post('/', function(req, res) {
-		// const { email, username, password } = req.body
+		const { email, username, password } = req.body;
+		const password_digest = bcrypt.hash(password,10);
 
-    User.register(
-    	new User({ 
-    		email: req.body.email,
-    		username: req.body.username
-    	}), 
-			req.body.password, 
+    // User.register(
+    	let user = new User({ 
+    		email,
+				password, 
+    		username
+    	})
+    	// )
+    	user.save()
+    	.then(user => res.json({ success: true }))
+	 		.catch(err => res.status(501).send({ error: err }))
+
+
+    	/*, 
     	function(err, user) {
         if (err) {
             return res.render('register', { user : user });
         }
         passport.authenticate('local')(req, res, function () {
             res.redirect('/');
-        });
-    });
+        });*/
+    // });
 });
 
 // ========= * READ a specific user item

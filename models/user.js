@@ -9,7 +9,7 @@ var UserSchema = new mongoose.Schema({
 			required: true, 
 			index: { unique: true } 
 		},
-		password: { 
+		password_digest: { 
 			default: null,
 			type: String, 
 			// +++++++++ server hangsup with this attribute  +++++++++ 
