@@ -23,38 +23,25 @@ router.get('/', (req, res) => {
 
 // ========= * CREATE a new user item
 // new and save are preferable to create for control flow
-// ... a safety route without validation or authetication ...
 
 router.post('/', function(req, res) {
-		const { email, username, password } = req.body;
-		let password_digest 
+	const { email, username, password } = req.body;
+	// let password_digest 
 
-		bcrypt.hash(password, 10)
-			.then(
-				password_digest => {
-					new User ({ email, password_digest, username })
-					.save()
-			  	.then(user => res.json({ success: true }))
-			 		.catch(err => res.status(501).send({ error: err }))
-				}	
-			)
-	 		.catch(err => res.status(501).send({ error: err }))
+	// create a bcrypt password and new User
+	bcrypt.hash(password, 10)
+		.then(
+			password_digest => {
+				new User ({ email, password_digest, username })
+				.save()
+		  	.then(user => res.json({ success: true }))
+		 		.catch(err => res.status(501).json({ error: err }))
+			}	
+		)
+ 		.catch(err => res.status(501).json({ error: err }))
 		
-
-  // User.register(
-  	// )
-
-
-    	/*, 
-    	function(err, user) {
-        if (err) {
-    	.then(res.render('register', { user : user }))
-        }
-        passport.authenticate('local')(req, res, function () {
-            res.redirect('/');
-        });*/
-    // });
 });
+
 
 // ========= * READ a specific user item
 router.get('/:id', (req, res) => {
@@ -107,128 +94,3 @@ router.delete('/:id', (req, res) => {
 });
 
 module.exports = router;
-
-
-
-
-
-// +++++++++ Tutorial post route  +++++++++ 
-
-	router.post('/', (req, res) => {
-		 const { errors, isValid } = validateInput(req.body);
-
-		 if (isValid) {
-		 	const { email, password, username } = req.body;
-
-		 	const password_digest = bcrypt.hash(password, 10);
-		 	// const password_digest = password
-		 	res.json(password_digest)
-		 	
-		 	// let user = new User({
-		 	// 	email, username, 
-		 	// 	// password_digest,
-		 	// 	password
-		 	// })
-			 // 	.save()
-			 // 	.then(user => res.json({ success: true , user}))
-		 	// 	.catch(err => res.status(501).send({ error: err }))
-		 	// +++++++++ remove this  +++++++++ 
-			}
-			// +++++++++   +++++++++ 
-		 	
-		 	/*user.save((err) => {
-				if (err) {
-					// handle error if not
-					res.status(501).send(err)
-				} else {
-					// return the new user if saved
-					res.status(201).send(user)
-				}
-			});	
-		 } else {
-		 	res.status(400).json(errors)
-		 }*/
-		 	/*User.register({
-		 		email, password, username 
-		 		// email, password_digest, username 
-		 	}).save()
-		 		.then(user => res.json({ success: true }))
-		 		.cathc(err => res.status(501).send({ error: err }))
-		 } else {
-		 	res.status(400).json(errors);
-		 }*/
-	})
-
-
-	// +++++++++  working basic route  +++++++++ 
-	/*router.post('/', (req, res) => {
-
-		// validate the request body
-		const { errors, isValid } = validateInput(req.body);
-
-		// create a new user
-		let user = new User(req.body);
-
-		// validate a save to the database
-		user.save((err) => {
-			if (err) {
-				// handle error if not
-				res.status(501).send(err)
-			} else {
-				// return the new user if saved
-				res.status(201).send(user)
-			}
-		});	
-
-		// authenticate the user with a hashed password
-	});*/
-
-	// +++++++++   +++++++++ 
-
-	/*router.post('/', function (req, res, next) {
-
-		const { errors, isValid } = validateInput(req.body);
-
-		if (!isValid) {
-			res.status(400).json(errors)
-		} else {
-
-			User.register(
-
-				new User({ 
-					username: req.body.username,
-					email: req.body.email,
-				}),
-
-				req.body.password,
-
-				function (err, account) {
-
-					if (err) {
-						res.status(501).send(err.message);
-						return res.render('register', { error : err.message });
-					} else {
-
-						passport.authenticate('local'),
-
-						function (req, res) {
-
-							req.session.save(function (err) {
-
-								if (err) {
-									return next(err);
-								} else {
-									res.redirect('/');
-									return res.status(201).send(res.user)
-								} // else 3
-
-							}); // func 4, save
-
-						}; // func 3
-
-					} //else 2
-				} // func 2
-			); //register
-		} //else 1
-	}); //post, func 1*/
-

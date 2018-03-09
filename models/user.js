@@ -25,11 +25,11 @@ var UserSchema = new mongoose.Schema({
 
 });
 
-// support authentication
+// support passport authentication
 UserSchema.plugin(passportLocalMongoose);
 
 // create and export a Model
 // module.exports = mongoose.model('User', UserSchema);
 
-// ... alternatively, to handle overwriting error
+// ... alternatively, to handle `overwriting` error
 module.exports = mongoose.models.User || mongoose.model('User', UserSchema);
