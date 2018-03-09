@@ -12,7 +12,8 @@ var UserSchema = new mongoose.Schema({
 		password: { 
 			default: null,
 			type: String, 
-			required: true, 
+			// +++++++++ server hangsup with this attribute  +++++++++ 
+			// required: true, 
 		},
 		username: { 
 			default: null,
@@ -28,5 +29,5 @@ UserSchema.plugin(passportLocalMongoose);
 // create and export a Model
 module.exports = mongoose.model('User', UserSchema);
 
-// ... alternatively, for older mongoose methods ...
+// ... alternatively, 
 // module.exports = mongoose.models.User || mongoose.model('User', UserSchema);
