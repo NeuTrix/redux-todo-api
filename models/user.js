@@ -12,8 +12,8 @@ var UserSchema = new mongoose.Schema({
 		password_digest: { 
 			default: null,
 			type: String, 
-			// +++++++++ server hangsup with this attribute  +++++++++ 
-			// required: true, 
+			// ++++++ server may hangup with this attribute enabled ++++++ 
+			required: true, 
 		},
 		username: { 
 			default: null,
