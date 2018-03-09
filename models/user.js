@@ -27,7 +27,7 @@ var UserSchema = new mongoose.Schema({
 UserSchema.plugin(passportLocalMongoose);
 
 // create and export a Model
-module.exports = mongoose.model('User', UserSchema);
+// module.exports = mongoose.model('User', UserSchema);
 
-// ... alternatively, 
-// module.exports = mongoose.models.User || mongoose.model('User', UserSchema);
+// ... alternatively, to handle overwriting error
+module.exports = mongoose.models.User || mongoose.model('User', UserSchema);
