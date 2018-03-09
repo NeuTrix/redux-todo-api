@@ -27,24 +27,28 @@ router.get('/', (req, res) => {
 
 router.post('/', function(req, res) {
 		const { email, username, password } = req.body;
-		const password_digest = bcrypt.hash(password,10);
+		let password_digest 
 
-    // User.register(
-    	let user = new User({ 
-    		email,
-				password, 
-    		username
-    	})
-    	// )
-    	user.save()
-    	.then(user => res.json({ success: true }))
+		bcrypt.hash(password, 10)
+			.then(
+				password_digest => {
+					new User ({ email, password_digest, username })
+					.save()
+			  	.then(user => res.json({ success: true }))
+			 		.catch(err => res.status(501).send({ error: err }))
+				}	
+			)
 	 		.catch(err => res.status(501).send({ error: err }))
+		
+
+  // User.register(
+  	// )
 
 
     	/*, 
     	function(err, user) {
         if (err) {
-            return res.render('register', { user : user });
+    	.then(res.render('register', { user : user }))
         }
         passport.authenticate('local')(req, res, function () {
             res.redirect('/');
