@@ -33,43 +33,63 @@ router.get('/', (req, res) => {
 	});
 });*/
 
-router.post('/', function(req, res, next) {
+
+
+
+
+
+
+
+// +++++++++   +++++++++ 
+
+router.post('/', function (req, res, next) {
 
 	const { errors, isValid } = validateInput(req.body);
 
 	if (!isValid) {
 		res.status(400).json(errors)
 	} else {
+
 		User.register(
+
 			new User({ 
 				username: req.body.username,
 				email: req.body.email,
 			}),
-			req.body.password,
-			function(err, account) {
-				if (err) {
-				// return res.render('register', { error : err.message });
-				// resp for cli and api
-				// return res.status(500).send(err.message)
-				res.render('register', { error : err.message });
-				}
-				
-			passport.authenticate('local')(req, res, function() {
-				req.session.save(function(err){
-					if (err) {
-						return next(err);
-					}
-				// res.redirect('/');
-				// resp for cli and api
-				res.redirect('/');
-				res.status(201).send(res.user)
 
-				});
-			});
-		});
-	}
-	
-});
+			req.body.password,
+
+			function (err, account) {
+
+				if (err) {
+					res.status(501).send(err.message);
+					return res.render('register', { error : err.message });
+				} else {
+
+					passport.authenticate('local'),
+
+					function (req, res) {
+
+						req.session.save(function (err) {
+
+							if (err) {
+								return next(err);
+							} else {
+								res.redirect('/');
+								return res.status(201).send(res.user)
+							} // else 3
+
+						}); // func 4, save
+
+					}; // func 3
+
+				} //else 2
+			} // func 2
+		); //register
+	} //else 1
+}); //post, func 1
+
+// +++++++++   +++++++++ 
 
 // ========= * READ a specific user item
 router.get('/:id', (req, res) => {
