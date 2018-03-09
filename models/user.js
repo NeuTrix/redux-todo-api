@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 var passportLocalMongoose = require('passport-local-mongoose');
 
+// create the schema
 var UserSchema = new mongoose.Schema({
 		email: { 
 			default: null,
@@ -21,8 +22,11 @@ var UserSchema = new mongoose.Schema({
 		},
 });
 
+// support authentication
 UserSchema.plugin(passportLocalMongoose);
 
-// create a Model
-// module.exports = mongoose.models.User || mongoose.model('User', UserSchema);
+// create and export a Model
 module.exports = mongoose.model('User', UserSchema);
+
+// ... alternatively, for older mongoose methods ...
+// module.exports = mongoose.models.User || mongoose.model('User', UserSchema);
