@@ -32,7 +32,7 @@ app.use(cookieParser());
 
 // ??? passport tutorial 
 app.use(require('express-session')({
-	secret: 'monkey ball',
+	secret: 'MY_SECRET',
 	resave: false,
 	saveUninitialized: false
 }));
@@ -62,7 +62,7 @@ let mongoDB = 'mongodb://Tester:test2015@ds135537.mlab.com:35537/react-redux-tod
 // establish pending connection to db
 mongoose.connect(mongoDB);
 // use the global Promise library
-// mongoose.Promise = global.Promise;
+mongoose.Promise = global.Promise;
 
 // default connection
 let db = mongoose.connection;

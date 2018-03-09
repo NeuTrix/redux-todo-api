@@ -3,9 +3,10 @@
 let express = require('express');
 let passport = require('passport');
 let validateInput = require('../helpers/signupValidator')
-let router = express.Router();
 
 let User = require('../models/user');
+
+let router = express.Router();
 
 // ========== * READ a list of all users
 router.get('/', (req, res) => {
@@ -22,11 +23,16 @@ router.get('/', (req, res) => {
 // ========= * CREATE a new user item
 // new and save are preferable to create for control flow
 // ... a safety route without validation or authetication ...
+
 router.post('/', (req, res) => {
 
 	// validate the request body
+
+	const { errors, isValid } = validateInput(req.body);
+
 	// create a new user
 	let user = new User(req.body);
+
 
 	// validate a save to the database
 	user.save((err) => {
