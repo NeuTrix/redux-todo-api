@@ -3,6 +3,7 @@ var passportLocalMongoose = require('passport-local-mongoose');
 
 // create the schema
 var UserSchema = new mongoose.Schema({
+
 		email: { 
 			default: null,
 			type: String,  
@@ -20,7 +21,8 @@ var UserSchema = new mongoose.Schema({
 			type: String, 
 			required: true, 
 			index: { unique: true } 
-		},
+		}
+
 });
 
 // support authentication
