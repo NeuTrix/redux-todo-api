@@ -26,7 +26,6 @@ router.get('/', (req, res) => {
 
 router.post('/', function(req, res) {
 	const { email, username, password } = req.body;
-	// let password_digest 
 
 	// create a bcrypt password and new User
 	bcrypt.hash(password, 10)
@@ -39,9 +38,7 @@ router.post('/', function(req, res) {
 			}	
 		)
  		.catch(err => res.status(501).json({ error: err }))
-		
 });
-
 
 // ========= * READ a specific user item
 router.get('/:id', (req, res) => {
