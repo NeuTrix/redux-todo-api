@@ -11,21 +11,21 @@ let router = express.Router();
 
 // ========== * READ a list of all users
 
-router.post('/', (req,res) => {
-	const { identifier, password, username } = req.body;
+router.post('/', (req, res) => {
 
+	const { identifier } = req.body;
 
-	User.findOne({ identifier: username || identifier: email } , 'email username',
+	User.findOne( 
+		{ $or: [ { 'username': identifier }, { 'email': identifier }] } ,
+	 'email username',
 		(err, user) => {
-			if(user) {
-				res.status(200).send( user )
+			if(!user) {
+				res.status(401).json({ error: `Can't find login for ${identifier} \n ${ err } ` })
 			} else {
-				res.status(401).json({ error: `Can't find login: ${err} ` })
+				res.status(200).send( user )
 			}
 	})
 });
-
-
 
 // // ========= * CREATE a new user item
 // // new and save are preferable to create for control flow
