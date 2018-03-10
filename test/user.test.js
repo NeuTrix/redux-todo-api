@@ -2,6 +2,7 @@
 
 let server = require('../app');
 let mongoose = require('mongoose');
+let dbSeed = require('../config/dbSeed')
 
 let chaiHttp = require('chai-http');
 let chai = require('chai');
@@ -12,36 +13,45 @@ let User = require('../models/user');
 
 chai.use(chaiHttp);
 
-xdescribe('Routes for /user resources', () => {
+describe('Routes for /user resources', () => {
 
-	const _task = {
-		task: 'Test Task: Hitting that route, yo!',
-		owner: 'Walker',
-		completed: false
+	// let _user // user profile for testing
+
+	const _user = {
+		username: 'Tchalla',
+		email: 'tbp@wakanda.com',
+		password: 'black-panther'
 	};
 
-	beforeEach((done) => {
-		mongoose.connection.db.dropDatabase();
+
+
+	before(() => {
+		// mongoose.connection.db.dropDatabase();
+		dbSeed.Seed(1)
+		new User({ _user })
 	});
 
-	after((done) => {
-		User.remove({ },(err) => {
+	/*after((done) => {
+
+		User.remove({ _user },(err) => {
 			err ? console.error.bind(console) : console.log('DB cleared');
 			done();
 		});
-	});
+	});*/
 
 	// =========== READ an index of all user
-	describe('*** READ index of all user: "/users" route', () => {
+	describe.only('*** READ index of all users: "/users" route', () => {
 
-		it('... returns a list of all current user', (done) => {
+		it('... returns a list of all current users', (done) => {
 
 			chai.request(server)
 				.get('/api/users')
 				.end((err, res) => {
+					console.log(res.body)
 					expect(res.status).to.eql(200);
 					expect(res.body).to.be.an('array');
-					expect(res.body.length).to.be.above(0);
+					expect(res.body.length).to.eql(1);
+					// expect(res.body.length).to.be.above(0);
 				});
 			done();
 		});

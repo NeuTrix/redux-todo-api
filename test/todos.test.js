@@ -8,7 +8,7 @@ let chai = require('chai');
 let expect = chai.expect;
 let should = chai.should();
 
-let Todo = require('../models/todo.model');
+let Todo = require('../models/todo');
 
 chai.use(chaiHttp);
 
@@ -19,9 +19,12 @@ xdescribe('Routes for /todo resources', () => {
 		owner: 'Walker',
 		completed: false
 	};
-
+/*
 	beforeEach((done) => {
 		mongoose.connection.db.dropDatabase();
+		// mongoose.connection.collections['collectionName'].drop( function(err) {
+  //   console.log('collection dropped');
+});
 	});
 
 	after((done) => {
@@ -29,7 +32,7 @@ xdescribe('Routes for /todo resources', () => {
 			err ? console.error.bind(console) : console.log('DB cleared');
 			done();
 		});
-	});
+	});*/
 
 	// =========== READ an index of all todo
 	describe('*** READ index of all todo: "/todos" route', () => {

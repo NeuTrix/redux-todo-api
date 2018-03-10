@@ -1,7 +1,7 @@
 /* eslint-env node, mocha */
 let express = require('express');
 let router = express.Router();
-let Todo = require('../models/todo.model');
+let Todo = require('../models/todo');
 
 // ========== * READ a list of all todos
 router.get('/', (req, res) => {

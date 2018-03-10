@@ -1,5 +1,5 @@
-let Todos = require('../models/todo.model');
-let Users = require('../models/user');
+let Todo = require('../models/todo');
+let User = require('../models/user');
 let _ = require('lodash');
 let Promise = require('bluebird');
 let faker = require('faker');
@@ -27,11 +27,11 @@ const Close = () => {
 
 const Clear =() => {
 	db.models = { }
-	Todos.remove({ },(err) => {
-			err ? console.error.bind(console) : console.log('Todos DB cleared');
+	Todo.remove({ },(err) => {
+			err ? console.error.bind(console) : console.log('Todo DB cleared');
 		});
-	Users.remove({ },(err) => {
-			err ? console.error.bind(console) : console.log('Users DB cleared');
+	User.remove({ },(err) => {
+			err ? console.error.bind(console) : console.log('User DB cleared');
 		});
 	console.log("********** db Cleared ******")
 }
@@ -42,6 +42,7 @@ const Clear =() => {
 const Seed = (count) => {
 
 _.times(count,() => {
+
 	let _task = {
 		owner: faker.name.lastName(),
 		task: faker.lorem.sentence(),
@@ -51,10 +52,22 @@ _.times(count,() => {
 		completed: faker.random.boolean()
 	};
 
-	let _todo = new Todos(_task)
+	let _profile = {
+		username: faker.name.findName(),
+		email: faker.internet.email(),
+		password_digest: faker.internet.password()
+	};
 
+
+	let _todo = new Todo(_task)
 	_todo.save((err, todo) => {
 		console.log(todo)
+	})
+
+	let _user = new User(_profile)
+	_user.save((err, user) => {
+		console.log(err)
+		console.log(user)
 	})
 })
 
