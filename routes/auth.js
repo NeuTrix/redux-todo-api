@@ -20,13 +20,17 @@ router.post('/', (req, res) => {
 	 // 'email username', // uncom- to limit returned values
 
 		(err, user) => {
-
 			if(user) {
 				let bHash = user.password_digest
 				let verified = bcrypt.compareSync(password, bHash)
-				if (verified) { res.status(200).json({ success: true }) }
+				if(verified) { 
+					res.status(200).json({ success: true }) 
+				} else {
+					res.status(401)
+						.json({ errors: { form: 'Invalid Credentials' } });
+				}
 			} else {
-				res.status(401)
+					res.status(401)
 					.json({ errors: { form: 'Invalid Credentials' } })
 			}
 	})
