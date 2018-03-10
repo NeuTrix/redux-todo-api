@@ -13,14 +13,19 @@ let router = express.Router();
 
 router.post('/', (req, res) => {
 
-	const { identifier } = req.body;
+	const { identifier, password } = req.body;
 
 	User.findOne( 
 		{ $or: [ { 'username': identifier }, { 'email': identifier }] } ,
-	 'email username',
+	 // 'email username', // to limit returned values
 		(err, user) => {
 			if(user) {
-				res.status(200).send( user )
+				let bHash = user.password_digest
+				let verified = bcrypt.compareSync(password, bHash)
+
+				res.status(200).send( verified )
+				// res.status(200).send( user.get('password_digest') )
+				// res.status(200).send( user )
 			} else {
 				res.status(401).json({ error: `Cannot find these credentials. Try again. \n ${ err } ` })
 			}
