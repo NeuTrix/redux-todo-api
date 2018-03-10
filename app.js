@@ -14,6 +14,7 @@ let path = require('path');
 let index = require('./routes/index');
 let todos = require('./routes/todos');
 let users = require('./routes/users');
+let auth  = require('./routes/auth');
 
 let app = express();
 
@@ -43,6 +44,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 app.use('/api', index);
+app.use('/api/auth', auth);
 app.use('/api/todos', todos);
 app.use('/api/users', users);
 
