@@ -18,7 +18,7 @@ router.post('/', (req, res) => {
 	User.findOne( 
 		{ $or: [ { 'username': identifier }, { 'email': identifier }] } ,
 	 // 'email username', // uncom- to limit returned values
-		
+
 		(err, user) => {
 
 			if(user) {
