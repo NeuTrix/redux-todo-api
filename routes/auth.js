@@ -17,15 +17,17 @@ router.post('/', (req, res) => {
 
 	User.findOne( 
 		{ $or: [ { 'username': identifier }, { 'email': identifier }] } ,
-	 // 'email username', // to limit returned values
+	 // 'email username', // uncom- to limit returned values
+		
 		(err, user) => {
+
 			if(user) {
 				let bHash = user.password_digest
 				let verified = bcrypt.compareSync(password, bHash)
-				if (verified) { res.status(200).send({ success: true }) }
-
+				if (verified) { res.status(200).json({ success: true }) }
 			} else {
-				res.status(401).json({ error: `Cannot find these credentials. Try again. \n ${ err } ` })
+				res.status(401)
+					.json({ errors: { form: 'Invalid Credentials' } })
 			}
 	})
 });
