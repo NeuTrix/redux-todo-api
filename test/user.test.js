@@ -23,8 +23,6 @@ describe('Routes for /user resources', () => {
 		password: 'black-panther'
 	};
 
-
-
 	before(() => {
 		// mongoose.connection.db.dropDatabase();
 		dbSeed.Seed(1)
