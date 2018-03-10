@@ -19,10 +19,10 @@ router.post('/', (req, res) => {
 		{ $or: [ { 'username': identifier }, { 'email': identifier }] } ,
 	 'email username',
 		(err, user) => {
-			if(!user) {
-				res.status(401).json({ error: `Can't find login for ${identifier} \n ${ err } ` })
-			} else {
+			if(user) {
 				res.status(200).send( user )
+			} else {
+				res.status(401).json({ error: `Cannot find these credentials. Try again. \n ${ err } ` })
 			}
 	})
 });
