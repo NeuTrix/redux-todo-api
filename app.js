@@ -14,6 +14,7 @@ let path = require('path');
 let index = require('./routes/index');
 let todos = require('./routes/todos');
 let users = require('./routes/users');
+let auth  = require('./routes/auth');
 
 let app = express();
 
@@ -32,7 +33,7 @@ app.use(cookieParser());
 
 // ??? passport tutorial 
 app.use(require('express-session')({
-	secret: 'monkey ball',
+	secret: 'MY_SECRET',
 	resave: false,
 	saveUninitialized: false
 }));
@@ -43,6 +44,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 app.use('/api', index);
+app.use('/api/auth', auth);
 app.use('/api/todos', todos);
 app.use('/api/users', users);
 
@@ -62,7 +64,7 @@ let mongoDB = 'mongodb://Tester:test2015@ds135537.mlab.com:35537/react-redux-tod
 // establish pending connection to db
 mongoose.connect(mongoDB);
 // use the global Promise library
-// mongoose.Promise = global.Promise;
+mongoose.Promise = global.Promise;
 
 // default connection
 let db = mongoose.connection;

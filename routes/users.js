@@ -2,8 +2,10 @@
 /* eslint-env node, mocha */
 let express = require('express');
 let passport = require('passport');
+let validateInput = require('../helpers/signupValidator');
+let bcrypt = require('bcrypt');
+
 let User = require('../models/user');
-let validateInput = require('../helpers/signupValidator')
 
 let router = express.Router();
 
@@ -20,55 +22,25 @@ router.get('/', (req, res) => {
 });
 
 // ========= * CREATE a new user item
-/*router.post('/', (req, res) => {
+// new and save are preferable to create for control flow
 
-	let _user = new User(req.body);
+router.post('/', function(req, res) {
+	const { email, username, password } = req.body;
 
-	_user.save((err, user) => {
-		if(err) {
-			res.status(500).send(err);
-		} else {
-			res.status(201).send(user);
-		}
-	});
-});*/
-
-router.post('/', function(req, res, next) {
-
-	const { errors, isValid } = validateInput(req.body);
-
-	if (!isValid) {
-		res.status(400).json(errors)
-	} else {
-		User.register(
-			new User({ 
-				username: req.body.username,
-				email: req.body.email,
-			}),
-			req.body.password,
-			function(err, account) {
-				if (err) {
-				// return res.render('register', { error : err.message });
-				// resp for cli and api
-				// return res.status(500).send(err.message)
-				res.render('register', { error : err.message });
-				}
-				
-			passport.authenticate('local')(req, res, function() {
-				req.session.save(function(err){
-					if (err) {
-						return next(err);
-					}
-				// res.redirect('/');
-				// resp for cli and api
-				res.redirect('/');
-				res.status(201).send(res.user)
-
-				});
-			});
-		});
-	}
-	
+	// create a bcrypt password and new User
+	bcrypt.hash(password, 10)
+		.then(
+			password_digest => {
+				new User ({ email, password_digest, username })
+				.save()
+		  	.then(user => res.json({ 
+		  		success: true, 
+			  	username: username 
+			  }))
+		 		.catch(err => res.status(501).json({ error: err.message }))
+			}	
+		)
+ 		.catch(err => res.status(501).json({ error: err.message }))
 });
 
 // ========= * READ a specific user item
