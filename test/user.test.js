@@ -25,12 +25,12 @@ describe('Routes for /user resources', () => {
 
 	before(() => {
 		// mongoose.connection.db.dropDatabase();
-		dbSeed.Seed(1)
+		dbSeed.Clear()
+		dbSeed.Seed(3)
 		new User({ _user })
 	});
 
 	/*after((done) => {
-
 		User.remove({ _user },(err) => {
 			err ? console.error.bind(console) : console.log('DB cleared');
 			done();
@@ -48,8 +48,7 @@ describe('Routes for /user resources', () => {
 					console.log(res.body)
 					expect(res.status).to.eql(200);
 					expect(res.body).to.be.an('array');
-					expect(res.body.length).to.eql(1);
-					// expect(res.body.length).to.be.above(0);
+					expect(res.body.length).to.be.above(0);
 				});
 			done();
 		});
