@@ -24,7 +24,7 @@ router.post('/', (req, res) => {
 				let bHash = user.password_digest
 				let verified = bcrypt.compareSync(password, bHash)
 					verified ?
-					res.status(200).json({ success: true }) :
+					res.status(200).json({ success: true, user: user.username }) :
 					res.status(401)
 						.json({ errors: { form: 'Invalid Credentials' } });
 			} else {
