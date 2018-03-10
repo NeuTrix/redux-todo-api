@@ -22,10 +22,8 @@ router.post('/', (req, res) => {
 			if(user) {
 				let bHash = user.password_digest
 				let verified = bcrypt.compareSync(password, bHash)
+				if (verified) { res.status(200).send({ success: true }) }
 
-				res.status(200).send( verified )
-				// res.status(200).send( user.get('password_digest') )
-				// res.status(200).send( user )
 			} else {
 				res.status(401).json({ error: `Cannot find these credentials. Try again. \n ${ err } ` })
 			}
