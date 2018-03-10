@@ -34,10 +34,10 @@ router.post('/', function(req, res) {
 				new User ({ email, password_digest, username })
 				.save()
 		  	.then(user => res.json({ success: true }))
-		 		.catch(err => res.status(501).json({ error: err }))
+		 		.catch(err => res.status(501).json({ error: err.message }))
 			}	
 		)
- 		.catch(err => res.status(501).json({ error: err }))
+ 		.catch(err => res.status(501).json({ error: err.message }))
 });
 
 // ========= * READ a specific user item
