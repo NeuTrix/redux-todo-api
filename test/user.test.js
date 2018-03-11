@@ -18,12 +18,12 @@ describe('Routes for /user resources', () => {
 	const _profile = {
 		username: 'Tchalla',
 		email: 'tbp@wakanda.com',
-		password: 'black-panther'
+		password: 'black-panther',
+		password_digest: 'somethingrandomgoeshere'
 	}; 
 
 	beforeEach(() => {
 		dbSeed.Seed(3);
-		new User(_profile)
 	}); 
 
 	afterEach(() => {
@@ -31,7 +31,7 @@ describe('Routes for /user resources', () => {
 	});
 
 	// =========== READ an index of all user
-	describe.only('*** READ the GET:"api/users route" ', () => {
+	describe('*** READ the GET:"api/users route" ', () => {
 
 		it('... returns a list of all current users', (done) => {
 			chai.request(server)
@@ -47,7 +47,7 @@ describe('Routes for /user resources', () => {
 	});
 
 	// =========== CREATE a new user item
-	describe.only('*** CREATE the POST: "/api/users route" ', () => {
+	describe('*** CREATE the POST: "/api/users route" ', () => {
 
 		it('...can post a new user object', (done) => {
 
@@ -69,14 +69,24 @@ describe('Routes for /user resources', () => {
 	});
 		
 	// =========== FIND a specific user item
-	xdescribe('*** READ the GET "/users/:id" route', () => {
+	describe('*** READ the GET "/users/:id" route', () => {
 
-			it ('finds hime', (done) => {
+			it.only ('finds him', (done) => {
+				let black = new User(_profile)
+				black.save()
+				// console.log(black._id)
+				let id = black._id
 
-		User.findOne({username: "Tchalla"},(user) => {
-			console.log(user)
-		});
-		done()
+				chai.request(server)
+					.get('/api/users/' + id)
+					.end((err, res) => {
+						expect(res.status).to.eql(200);
+						expect(res.body).to.be.an('object');
+						expect(res.body).to.have.property('task');
+						expect(res.body).to.have.property('completed');
+						expect(res.body).to.have.property('completed');
+					})
+				done()
 			});
 		// User.findOne({ },(err, user) => {
 			// let _id = user.id
@@ -84,15 +94,7 @@ describe('Routes for /user resources', () => {
 		// console.log(user)
 		/*	it('... can find a specific user item', (done) => {
 
-				chai.request(server)
-					.get('/api/users/' + user.id)
-					.send(user)
-					.end((err, res) => {
-						expect(res.status).to.eql(200);
-						expect(res.body).to.be.an('object');
-						expect(res.body).to.have.property('task');
-						expect(res.body).to.have.property('completed');
-						expect(res.body).to.have.property('completed');
+				
 					done();
 				}); //chai*/
 			// }); //it
