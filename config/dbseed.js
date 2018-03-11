@@ -58,10 +58,9 @@ _.times(count,() => {
 		password_digest: faker.internet.password()
 	};
 
-
 	let _todo = new Todo(_task)
 	_todo.save((err, todo) => {
-		// console.log(todo)
+		console.log(todo)
 		err  => console.log(err) 
 		
 	})
@@ -69,7 +68,7 @@ _.times(count,() => {
 	let _user = new User(_profile)
 	_user.save((err, user) => {
 		err  => console.log(err) 
-		// console.log(user)
+		console.log(user)
 	})
 })
 

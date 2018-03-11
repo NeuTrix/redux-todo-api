@@ -5,7 +5,7 @@ let passport = require('passport');
 let validateInput = require('../helpers/signupValidator');
 let bcrypt = require('bcrypt');
 let jwt = require('jsonwebtoken')
-let config = require('../config/token')
+let config = require('../config/auth')
 
 let User = require('../models/user');
 
@@ -28,15 +28,16 @@ router.post('/', (req, res) => {
 					if (verified) {
 
 						 const token = jwt.sign({
-						 	// do not include any private info for a token
-						 	id: user._id,
-						 	username: user.username
+							 	// do not include any private info for a token
+							 	id: user._id,
+							 	username: user.username
 						 }, config.jwtSecret);
 
-						res.status(200).json({ 
+						res.status(200).json( { 
+							token,
 							success: true, 
 							username: user.username,
-							user: _id 
+							_id: user._id 
 						}) 
 					} else {
 						res.status(401)

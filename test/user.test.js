@@ -19,7 +19,7 @@ describe('Routes for /user resources', () => {
 		username: 'Tchalla',
 		email: 'tbp@wakanda.com',
 		password: 'black-panther'
-	};
+	}; 
 
 	beforeEach(() => {
 		dbSeed.Seed(3);
