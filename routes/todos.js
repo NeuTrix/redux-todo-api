@@ -64,9 +64,9 @@ router.put ('/:id', (req, res) => {
 // ========= * DELETE a specific item
 router.delete('/:id', (req, res) => {
 
-	Todo.findByIdAndRemove(req.params.id, (error, todo) => {
+	Todo.findByIdAndRemove(req.params.id, (err, todo) => {
 
-		if(error) {
+		if(err) {
 			return res.status(500).send(err)
 		} else {
 			let message = {

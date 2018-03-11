@@ -8,12 +8,12 @@ var TodoSchema = new Schema({
 		default: false
 	},
 	date: { type: Date, default: '1936-05-24' },
-	details: { type: String, default: "Black Panther of Wakanda" },
-	owner: { type: String, default: "Prince T'Challa" },
+	details: { type: String, default: "Default Details" },
+	owner: { type: String, default: "Default Owner" },
 	rank: { type: String, default: "Med" },
 	task: {
 		type: String,
-		default: "Making the world better",
+		default: "Default Task",
 		required: [ 
 		true, "Please add a Task" ]
 	},
