@@ -23,6 +23,7 @@ describe('Routes for /user resources', () => {
 	}; 
 
 	let _user
+
 	beforeEach(() => {
 		dbSeed.Clear();
 		dbSeed.Seed(3);
@@ -55,27 +56,34 @@ describe('Routes for /user resources', () => {
 
 		it('...can post a new user object', (done) => {
 
+			let _user2 = {
+				username: 'Erik',
+				email: 'EK@oakland.com',
+				password: 'killmonger',
+				password_digest: 'somethingrandomgoeshere'
+			};
+
 			chai.request(server)
 				.post('/api/users/')
-				.send(_profile)
+				.send(_user2)
 				.end((err, res) => {
 					expect(res.status).to.eql(200);
 					expect(res.body).to.be.an('object');
 					expect(res.body).to.have.property('success')
 						.to.eql(true);
 					expect(res.body).to.have.property('username')
-						.to.eql('Tchalla')
+						.to.eql(_user2.username);
 					expect(res.body).to.have.property('_id')
-						.to.be.a('string')
+						.to.be.a('string');
 				done(); 
 				}); 	
 		}); 
 	});
 		
 	// =========== FIND a specific user item
-	describe('*** READ the GET "/users/:id" route', () => {
+	describe('*** READs the GET "/users/:id" route', () => {
 
-			it.only ('finds him', (done) => {
+			it ('can find a user by _id', (done) => {
 				chai.request(server)
 					.get('/api/users/' + _user._id)
 					.end((err, res) => {
@@ -83,72 +91,16 @@ describe('Routes for /user resources', () => {
 						expect(res.body).to.be.an('object');
 						expect(res.body).to.have.property('username')
 							.to.eql(_user.username);
-						// expect(res.body).to.have.property('email');
-						// expect(res.body).to.have.property('completed');
+						expect(res.body).to.have.property('email')
+							.to.eql(_user.email);
+						expect(res.body).to.have.property('password_digest')
+							.to.eql(_user.password_digest);
 					done()
 					})
 			});
 	}); //desc
 
 
-	// =========== UPDATE a specific user  
-	describe('*** UPDATE a specific user: "/users/:id" route', () => {
-		it('... can update an item', (done) => {
-
-			let _user = new User(_task);
-			let oldId = _user._id.toString();
-
-			_user.save((err, user) => {
-
-				chai.request(server)
-					.put('/api/users/' + user.id)
-					.send({
-						task: 'Test Task:  Update Item',
-						completed: true,
-						owner: 'Johara Bell',
-					})
-
-					.end((err, res) => {
-						expect(res.body.completed).to.eql(true);
-						expect(res.status).to.eql(200);
-						expect(res.body).to.have.property('_id');
-						expect(res.body._id).to.equal(oldId);
-						expect(res.body).to.have.property('task');
-						expect(res.body.task).to.eql('Test Task:  Update Item');
-						expect(res.body).to.have.property('owner');
-						expect(res.body.owner).to.eql('Johara Bell');
-						expect(res.body).to.have.property('completed');
-						// expect(res.body.test).to.eql(false);
-						expect(res.body).to.be.an('object');
-					done();		
-					});
-			});
-		});
-	});
-
-	// =========== DELETE a specific user  
-	describe('*** DELETE a specific user: "/users/:id" route', () => {
-
-		it(' can delete an item', (done) => {
-			
-			let _user = new User(_task);
-
-			_user.save((err, user) => {
-
-				chai.request(server)
-					.delete('/api/users/' + user.id)
-					.end((err, res) => {
-						expect(res.status).to.eql(200);
-						expect(res.body).to.be.an('object');
-						// +++BUG:
-						console.log(res.text);
-						expect(res.text).to.exist;
-						// expect(res).to.have.property('message').eql('The user with id 5a95d10d26deea15d4e9b8a1 has been deleted');
-					done();
-					});
-			});
-		});
-	});
 
 });
 
