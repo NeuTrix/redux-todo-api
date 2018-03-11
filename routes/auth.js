@@ -18,7 +18,7 @@ router.post('/', (req, res) => {
 	const { identifier, password } = req.body;
 
 	User.findOne( 
-		{ $or: [ { 'username': identifier }, { 'email': identifier }] } ,
+		{ $or: [ { 'username': identifier }, { 'email': identifier } ] } ,
 	 // 'email username', // uncom- to limit returned values
 
 		(err, user) => {

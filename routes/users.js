@@ -1,13 +1,33 @@
-
 /* eslint-env node, mocha */
 let express = require('express');
 let passport = require('passport');
-let validateInput = require('../helpers/signupValidator');
+let commonValidations = require('../helpers/signupValidator');
 let bcrypt = require('bcrypt');
+let isEmpty = require('lodash/isEmpty');
 
 let User = require('../models/user');
 
 let router = express.Router();
+
+const validateInput = function(data, otherValidations) {
+	// gather validation errors
+	let { errors } = otherValidations(data);
+
+	return User.findOne( 
+		{ $or: [{ 'username': data.username }, { 'email': data.email } ]}), 
+		(err, user) => {
+			if (user) {
+			if (user.username === data.username) {
+				errors.username = 'This username already exists.'
+			}
+			if (user.email === data.email)
+				errors.email = 'This email already exists.'
+			}
+		};
+
+	return { errors, isValid: isEmpty(errors)};
+}
+
 
 // ========== * READ a list of all users
 router.get('/', (req, res) => {
@@ -25,23 +45,28 @@ router.get('/', (req, res) => {
 // new and save are preferable to create for control flow
 
 router.post('/', function(req, res) {
+	const { errors, isValid } = validateInput;
 	const { email, username, password } = req.body;
 
-	// create a bcrypt password and new User
-	bcrypt.hash(password, 10)
-		.then(
-			password_digest => {
-				new User ({ email, password_digest, username })
-				.save()
-		  	.then(user => res.json({ 
-		  		success: true, 
-			  	username: username,
-			  	_id: user._id 
-			  }))
-		 		.catch(err => res.status(501).send({ error: err.message }))
-			}	
-		)
- 		.catch(err => res.status(501).json({ error: err.message }))
+	if (isValid) {
+		// create a bcrypt password and new User
+		bcrypt.hash(password, 10)
+			.then(
+				password_digest => {
+					new User ({ email, password_digest, username })
+					.save()
+			  	.then(user => res.json({ 
+			  		success: true, 
+				  	username: username,
+				  	_id: user._id 
+				  }))
+			 		.catch(err => res.status(501).send({ error: err.message }))
+				}	
+			)
+	 		.catch(err => res.status(501).json({ error: err.message }))
+ 		} else {
+	 		 res.status(501).json({ errors })
+ 		}
 });
 
 // ========= * READ a specific user item

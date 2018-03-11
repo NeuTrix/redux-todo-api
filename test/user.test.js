@@ -35,7 +35,7 @@ describe('Routes for /user resources', () => {
 		dbSeed.Clear();
 	});
 
-	// =========== READ an index of all user
+	// =========== READ an index of all users
 	describe('*** READ the GET:"api/users route" ', () => {
 
 		it('... returns a list of all current users', (done) => {
@@ -49,37 +49,8 @@ describe('Routes for /user resources', () => {
 				done();
 				});
 		});
-	});
+ 	});
 
-	// =========== CREATE a new user item
-	describe('*** CREATE the POST: "/api/users route" ', () => {
-
-		it('...can post a new user object', (done) => {
-
-			let _user2 = {
-				username: 'Erik',
-				email: 'EK@oakland.com',
-				password: 'killmonger',
-				password_digest: 'somethingrandomgoeshere'
-			};
-
-			chai.request(server)
-				.post('/api/users/')
-				.send(_user2)
-				.end((err, res) => {
-					expect(res.status).to.eql(200);
-					expect(res.body).to.be.an('object');
-					expect(res.body).to.have.property('success')
-						.to.eql(true);
-					expect(res.body).to.have.property('username')
-						.to.eql(_user2.username);
-					expect(res.body).to.have.property('_id')
-						.to.be.a('string');
-				done(); 
-				}); 	
-		}); 
-	});
-		
 	// =========== FIND a specific user item
 	describe('*** READs the GET "/users/:id" route', () => {
 
@@ -99,6 +70,77 @@ describe('Routes for /user resources', () => {
 					})
 			});
 	}); //desc
+
+	// =========== CREATE a new user item
+	describe('*** CREATE the POST: "/api/users route" ', () => {
+
+		it.only ('...can post a new user object', (done) => {
+
+			let user = {
+				username: 'Erik',
+				email: 'EK@oakland.com',
+				password: 'killmonger',
+				password_digest: 'somethingrandomgoeshere'
+			};
+
+			chai.request(server)
+				.post('/api/users/')
+				.send(user)
+				.end((err, res) => {
+					expect(res.status).to.eql(200);
+					expect(res.body).to.be.an('object');
+					expect(res.body).to.have.property('success')
+						.to.eql(true);
+					expect(res.body).to.have.property('username')
+						.to.eql(user.username);
+					expect(res.body).to.have.property('_id')
+						.to.be.a('string');
+				done(); 
+				}); 	
+		}); 
+
+		it ('... won\'t permit a duplicate in FULL', (done) => {
+			let _user2 = {
+				username: 'Tchalla',
+				email: 'tbp@wakanda.com',
+				password: 'black-panther',
+				password_digest: 'somethingrandomgoeshere'
+			};
+
+			chai.request(server)
+				.post('/api/users/')
+				.send(_user2)
+				.end((err, res) => {
+					expect(res.status).to.eql(501);
+					expect(res.body).to.be.an('object');
+					expect(res.body).to.have.property('error')
+						.to.be.a('string');
+				done(); 
+				}); 
+		});
+
+		it.only ('... won\'t permit a duplicate in USERNAME', (done) => {
+			let _user = {
+				username: 'Tchalla', // duplicate
+				email: 'EK@oakland.com',
+				password: 'killmonger',
+				password_digest: 'somethingrandomgoeshere'
+			};
+
+			chai.request(server)
+				.post('/api/users/')
+				.send(_user)
+				.end((err, res) => {
+					expect(res.status).to.eql(501);
+					expect(res.body).to.be.an('object');
+					expect(res.body).to.have.property('error')
+						.to.be.a('string');
+				done(); 
+				}); 
+		});
+	});
+		
+	
 
 
 
