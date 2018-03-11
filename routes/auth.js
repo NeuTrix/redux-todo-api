@@ -4,6 +4,8 @@ let express = require('express');
 let passport = require('passport');
 let validateInput = require('../helpers/signupValidator');
 let bcrypt = require('bcrypt');
+let jwt = require('jsonwebtoken')
+let config = require('../config/token')
 
 let User = require('../models/user');
 
@@ -23,16 +25,25 @@ router.post('/', (req, res) => {
 			if(user) {
 				let bHash = user.password_digest
 				let verified = bcrypt.compareSync(password, bHash)
-					verified ?
-					res.status(200).json({ 
-						success: true, 
-						username: user.username,
-						user: _id 
-					}) :
-					res.status(401)
-						.json({ errors: { form: 'Invalid Credentials' } });
+					if (verified) {
+
+						 const token = jwt.sign({
+						 	// do not include any private info for a token
+						 	id: user._id,
+						 	username: user.username
+						 }, config.jwtSecret);
+
+						res.status(200).json({ 
+							success: true, 
+							username: user.username,
+							user: _id 
+						}) 
+					} else {
+						res.status(401)
+							.json({ errors: { form: 'Invalid Credentials' } });
+					}
 			} else {
-					res.status(401)
+				res.status(401)
 					.json({ errors: { form: 'Invalid Credentials' } })
 			}
 	})
