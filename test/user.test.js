@@ -73,32 +73,23 @@ describe('Routes for /user resources', () => {
 
 			it.only ('finds him', (done) => {
 				let black = new User(_profile)
-				black.save()
-				// console.log(black._id)
-				let id = black._id
+					black.save()
+				// console.log(black)
+					let id = black._id
+
 
 				chai.request(server)
 					.get('/api/users/' + id)
 					.end((err, res) => {
 						expect(res.status).to.eql(200);
 						expect(res.body).to.be.an('object');
-						expect(res.body).to.have.property('task');
-						expect(res.body).to.have.property('completed');
-						expect(res.body).to.have.property('completed');
+						expect(res.body).to.have.property('username')
+							.to.eql(_profile.username);
+						// expect(res.body).to.have.property('email');
+						// expect(res.body).to.have.property('completed');
+					done()
 					})
-				done()
 			});
-		// User.findOne({ },(err, user) => {
-			// let _id = user.id
-			// console.log(_id)
-		// console.log(user)
-		/*	it('... can find a specific user item', (done) => {
-
-				
-					done();
-				}); //chai*/
-			// }); //it
-		// }); // User
 	}); //desc
 
 
