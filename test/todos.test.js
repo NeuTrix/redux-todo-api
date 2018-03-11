@@ -12,7 +12,7 @@ let Todo = require('../models/todo');
 
 chai.use(chaiHttp);
 
-xdescribe('Routes for /todo resources', () => {
+describe('Routes for /todo resources', () => {
 
 	const _task = {
 		task: 'Test Task: Hitting that route, yo!',
@@ -45,8 +45,8 @@ xdescribe('Routes for /todo resources', () => {
 					expect(res.status).to.eql(200);
 					expect(res.body).to.be.an('array');
 					expect(res.body.length).to.be.above(0);
+				done();
 				});
-			done();
 		});
 	});
 
@@ -65,8 +65,8 @@ xdescribe('Routes for /todo resources', () => {
 					expect(res.body).to.have.property('completed');
 					expect(res.body).to.have.property('_id');
 					expect(res.body._id).to.be.a('string');
+				done();
 				}); 	
-			done();
 		}); 
 	});
 		
@@ -122,8 +122,8 @@ xdescribe('Routes for /todo resources', () => {
 						expect(res.body).to.have.property('completed');
 						// expect(res.body.test).to.eql(false);
 						expect(res.body).to.be.an('object');
+					done();		
 					});
-				done();		
 			});
 		});
 	});
