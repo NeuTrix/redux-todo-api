@@ -1,5 +1,4 @@
 /* eslint-env node, mocha, chai, jest */
-
 let server = require('../app');
 let mongoose = require('mongoose');
 let dbSeed = require('../config/dbSeed')
@@ -7,7 +6,6 @@ let dbSeed = require('../config/dbSeed')
 let chaiHttp = require('chai-http');
 let chai = require('chai');
 let expect = chai.expect;
-let should = chai.should();
 
 let User = require('../models/user');
 

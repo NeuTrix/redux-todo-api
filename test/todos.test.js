@@ -2,11 +2,11 @@
 
 let server = require('../app');
 let mongoose = require('mongoose');
+let dbSeed = require('../config/dbSeed')
 
 let chaiHttp = require('chai-http');
 let chai = require('chai');
 let expect = chai.expect;
-let should = chai.should();
 
 let Todo = require('../models/todo');
 
@@ -19,6 +19,15 @@ describe('Routes for /todo resources', () => {
 		owner: 'Walker',
 		completed: false
 	};
+	beforeEach(() => {
+		dbSeed.Clear();
+		dbSeed.Seed(3);
+	});
+
+	afterEach(() => {
+		dbSeed.Clear();
+	});
+
 /*
 	beforeEach((done) => {
 		mongoose.connection.db.dropDatabase();
