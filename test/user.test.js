@@ -17,8 +17,10 @@ describe('Routes for /user resources', () => {
 
 	const _profile = {
 		username: 'Tchalla',
+		emailConfirm: 'tbp@wakanda.com',
 		email: 'tbp@wakanda.com',
 		password: 'black-panther',
+		passwordConfirm: 'black-panther',
 		password_digest: 'somethingrandomgoeshere'
 	}; 
 
@@ -28,7 +30,7 @@ describe('Routes for /user resources', () => {
 		dbSeed.Clear();
 		dbSeed.Seed(3);
 		_user = new User(_profile)
-			_user.save()
+		_user.save()
 	}); 
 
 	afterEach(() => {
@@ -72,14 +74,17 @@ describe('Routes for /user resources', () => {
 	}); //desc
 
 	// =========== CREATE a new user item
+
 	describe('*** CREATE the POST: "/api/users route" ', () => {
 
-		it.only ('...can post a new user object', (done) => {
+		it ('...can post a new user object', (done) => {
 
 			let user = {
 				username: 'Erik',
-				email: 'EK@oakland.com',
+				email: 'Erik@oakland.com',
+				emailConfirm: 'Erik@oakland.com', // good address
 				password: 'killmonger',
+				passwordConfirm: 'killmonger',
 				password_digest: 'somethingrandomgoeshere'
 			};
 
@@ -97,19 +102,67 @@ describe('Routes for /user resources', () => {
 						.to.be.a('string');
 				done(); 
 				}); 	
-		}); 
+		});
 
-		it ('... won\'t permit a duplicate in FULL', (done) => {
-			let _user2 = {
-				username: 'Tchalla',
-				email: 'tbp@wakanda.com',
-				password: 'black-panther',
+		it ('... validates email matching', (done) => {
+
+			let user = {
+				username: 'Erik',
+				email: 'Erik@oakland.com',
+				emailConfirm: 'NotGood@oakland.com', // bad confirm
+				password: 'killmonger',
+				passwordConfirm: 'killmonger',
 				password_digest: 'somethingrandomgoeshere'
 			};
 
 			chai.request(server)
 				.post('/api/users/')
-				.send(_user2)
+				.send(user)
+				.end((err, res) => {
+					expect(res.status).to.eql(400);
+					expect(res.body).to.be.an('object');
+					expect(res.body).to.have.property('emailConfirm')
+						.to.eql('Emails do not match')
+				done(); 
+				}); 	
+		}); 
+
+		it ('... validates password matching', (done) => {
+
+			let user = {
+				username: 'Erik',
+				email: 'Erik@oakland.com',
+				emailConfirm: 'Erik@oakland.com',
+				password: 'killmonger',
+				passwordConfirm: 'knuckleHead', // bad confirm
+				password_digest: 'somethingrandomgoeshere'
+			};
+
+			chai.request(server)
+				.post('/api/users/')
+				.send(user)
+				.end((err, res) => {
+					expect(res.status).to.eql(400);
+					expect(res.body).to.be.an('object');
+					expect(res.body).to.have.property('passwordConfirm')
+						.to.eql('Passwords do not match')
+				done(); 
+				}); 	
+		}); 
+
+		it.only ('... won\'t permit a duplicate in FULL', (done) => {
+			let user = {
+				username: 'Tchalla',
+				emailConfirm: 'tbp@wakanda.com',
+				email: 'tbp@wakanda.com',
+				password: 'black-panther',
+				passwordConfirm: 'black-panther',
+				password_digest: 'somethingrandomgoeshere'
+			};
+
+			chai.request(server)
+				.post('/api/users/')
+				.send(user)
 				.end((err, res) => {
 					expect(res.status).to.eql(501);
 					expect(res.body).to.be.an('object');
@@ -119,12 +172,36 @@ describe('Routes for /user resources', () => {
 				}); 
 		});
 
-		it.only ('... won\'t permit a duplicate in USERNAME', (done) => {
+		it ('... won\'t permit a duplicate USERNAME', (done) => {
 			let _user = {
 				username: 'Tchalla', // duplicate
-				email: 'EK@oakland.com',
-				password: 'killmonger',
-				password_digest: 'somethingrandomgoeshere'
+				email:'pm@harlem.com',
+				emailConfirm:'pm@harlem.com',
+				password:'powerMan',
+				passwordConfirm:'powerMan',
+				password_digest: '98798sdansJLJ-I-MADE_THIS-sjjs-UP'
+			};
+
+			chai.request(server)
+				.post('/api/users/')
+				.send(_user)
+				.end((err, res) => {
+					expect(res.status).to.eql(501);
+					expect(res.body).to.be.an('object');
+					expect(res.body).to.have.property('error')
+						.to.be.a('string');
+				done(); 
+				}); 
+		});
+
+		it ('... won\'t permit a duplicate EMAIL', (done) => {
+			let _user = {
+				username:'LukeCage', 
+				emailConfirm: 'tbp@wakanda.com', // dupllicate
+				email: 'tbp@wakanda.com', // dupllicate
+				password:'powerMan',
+				passwordConfirm:'powerMan',
+				password_digest: '98798sdansJLJ-I-MADE_THIS-sjjs-UP'
 			};
 
 			chai.request(server)
@@ -139,11 +216,6 @@ describe('Routes for /user resources', () => {
 				}); 
 		});
 	});
-		
-	
-
-
-
 });
 
 

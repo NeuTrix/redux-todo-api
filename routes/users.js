@@ -44,30 +44,57 @@ router.get('/', (req, res) => {
 // ========= * CREATE a new user item
 // new and save are preferable to create for control flow
 
-router.post('/', function(req, res) {
-	const { errors, isValid } = validateInput;
-	const { email, username, password } = req.body;
+router.post('/', (req, res) => {
+	/*validateInput(req.body, commonValidations).then(({ errors, isValid }) => {*/
+		const { errors, isValid } = commonValidations (req.body)
 
-	if (isValid) {
-		// create a bcrypt password and new User
-		bcrypt.hash(password, 10)
-			.then(
-				password_digest => {
-					new User ({ email, password_digest, username })
-					.save()
-			  	.then(user => res.json({ 
-			  		success: true, 
-				  	username: username,
-				  	_id: user._id 
-				  }))
-			 		.catch(err => res.status(501).send({ error: err.message }))
-				}	
-			)
-	 		.catch(err => res.status(501).json({ error: err.message }))
- 		} else {
-	 		 res.status(501).json({ errors })
- 		}
+		if (!isValid) {
+			res.status(400).json(errors)
+		} else {
+			
+			const { email, username, password } = req.body;
+
+			bcrypt.hash(password, 10)
+				.then(
+					password_digest => {
+						new User ({ email, password_digest, username })
+						.save()
+				  	.then(user => res.json({ 
+				  		success: true, 
+					  	username: username,
+					  	_id: user._id 
+					  }))
+			 		.catch(err => res.status(501)
+			 		.send({ error: err.message }))
+				})
+				
+		 		.catch(err => res.status(501).json({ error: err.message }))
+		};
 });
+
+/*router.post('/', (req, res) => {
+	validateInput(req.body, commonValidations).then(({ errors, isValid }) => {
+		if (isValid) {
+			const { email, username, password } = req.body;
+			bcrypt.hash(password, 10)
+				.then(
+					password_digest => {
+						new User ({ email, password_digest, username })
+						.save()
+				  	.then(user => res.json({ 
+				  		success: true, 
+					  	username: username,
+					  	_id: user._id 
+					  }))
+			 		.catch(err => res.status(501)
+			 		.send({ error: err.message }))
+				})
+		 		.catch(err => res.status(501).json({ error: err.message }))
+		} else {
+			res.status(400).json(errors);
+		}
+	});
+});*/
 
 // ========= * READ a specific user item
 router.get('/:id', (req, res) => {

@@ -28,12 +28,12 @@ const Close = () => {
 const Clear =() => {
 	db.models = { }
 	Todo.remove({ },(err) => {
-			err ? console.error.bind(console) : console.log('Todo DB cleared');
+			(err) => console.error.bind(console) 
 		});
 	User.remove({ },(err) => {
-			err ? console.error.bind(console) : console.log('User DB cleared');
+			(err) => console.error.bind(console) 
 		});
-	console.log("********** db Cleared ******")
+	// console.log('** db Cleared **')
 }
 
 // ========= The Seed Module
