@@ -35,9 +35,10 @@ router.post('/', function(req, res) {
 				.save()
 		  	.then(user => res.json({ 
 		  		success: true, 
-			  	username: username 
+			  	username: username,
+			  	_id: user._id 
 			  }))
-		 		.catch(err => res.status(501).json({ error: err.message }))
+		 		.catch(err => res.status(501).send({ error: err.message }))
 			}	
 		)
  		.catch(err => res.status(501).json({ error: err.message }))

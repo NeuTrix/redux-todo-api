@@ -26,7 +26,8 @@ router.post('/', (req, res) => {
 					verified ?
 					res.status(200).json({ 
 						success: true, 
-						username: user.username 
+						username: user.username,
+						user: _id 
 					}) :
 					res.status(401)
 						.json({ errors: { form: 'Invalid Credentials' } });

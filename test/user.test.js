@@ -15,63 +15,61 @@ chai.use(chaiHttp);
 
 describe('Routes for /user resources', () => {
 
-	// let _user // user profile for testing
 
-	const _user = {
+	const _profile = {
 		username: 'Tchalla',
 		email: 'tbp@wakanda.com',
 		password: 'black-panther'
 	};
 
 	before(() => {
-		// mongoose.connection.db.dropDatabase();
-		dbSeed.Clear()
-		dbSeed.Seed(3)
-		new User({ _user })
+		dbSeed.Seed(3);
+	}); 
+
+	after(() => {
+		dbSeed.Clear();
 	});
 
-	/*after((done) => {
-		User.remove({ _user },(err) => {
-			err ? console.error.bind(console) : console.log('DB cleared');
-			done();
-		});
-	});*/
-
 	// =========== READ an index of all user
-	describe.only('*** READ index of all users: "/users" route', () => {
+	describe.only('*** READ index of all users: "api/users" route', () => {
 
 		it('... returns a list of all current users', (done) => {
-
 			chai.request(server)
 				.get('/api/users')
 				.end((err, res) => {
-					console.log(res.body)
+					// console.log(res.body[1])
 					expect(res.status).to.eql(200);
 					expect(res.body).to.be.an('array');
 					expect(res.body.length).to.be.above(0);
+				done();
 				});
-			done();
 		});
 	});
 
 	// =========== CREATE a new user item
-	describe('*** CREATE a new user item: "/users" route', () => {
+	describe.only('*** CREATE a new user item: "/api/users" route', () => {
 
-		it('...can create a new user item', (done) => {
+		it('...can post a new user object', (done) => {
 
 			chai.request(server)
 				.post('/api/users/')
-				.send(_task)
+				.send(_profile)
 				.end((err, res) => {
-					expect(res.status).to.eql(201);
+					expect(res.status).to.eql(200);
 					expect(res.body).to.be.an('object');
-					expect(res.body).to.have.property('task');
-					expect(res.body).to.have.property('completed');
-					expect(res.body).to.have.property('_id');
-					expect(res.body._id).to.be.a('string');
+					expect(res.body).to.have.property('success')
+						.to.eql(true);
+					expect(res.body).to.have.property('username')
+						.to.eql('Tchalla')
+					expect(res.body).to.have.property('_id')
+						.to.be.a('string')
+				done(); 
 				}); 	
-			done();
 		}); 
+
+			it ('', () => {
+
+			});
 	});
 		
 	// =========== FIND a specific user item
@@ -90,7 +88,7 @@ describe('Routes for /user resources', () => {
 						expect(res.body).to.have.property('task');
 						expect(res.body).to.have.property('completed');
 						expect(res.body).to.have.property('completed');
-						done();
+					done();
 					}); 
 			}); 
 		}); 
@@ -126,8 +124,8 @@ describe('Routes for /user resources', () => {
 						expect(res.body).to.have.property('completed');
 						// expect(res.body.test).to.eql(false);
 						expect(res.body).to.be.an('object');
+					done();		
 					});
-				done();		
 			});
 		});
 	});
@@ -150,7 +148,7 @@ describe('Routes for /user resources', () => {
 						console.log(res.text);
 						expect(res.text).to.exist;
 						// expect(res).to.have.property('message').eql('The user with id 5a95d10d26deea15d4e9b8a1 has been deleted');
-						done();
+					done();
 					});
 			});
 		});

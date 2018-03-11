@@ -61,13 +61,15 @@ _.times(count,() => {
 
 	let _todo = new Todo(_task)
 	_todo.save((err, todo) => {
-		console.log(todo)
+		// console.log(todo)
+		err  => console.log(err) 
+		
 	})
 
 	let _user = new User(_profile)
 	_user.save((err, user) => {
-		console.log(err)
-		console.log(user)
+		err  => console.log(err) 
+		// console.log(user)
 	})
 })
 
