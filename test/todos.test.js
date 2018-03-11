@@ -95,7 +95,7 @@ describe('Routes for /todo resources', () => {
 						expect(res.body).to.have.property('task');
 						expect(res.body).to.have.property('completed');
 						expect(res.body).to.have.property('completed');
-						done();
+					done();
 					}); 
 			}); 
 		}); 
@@ -155,7 +155,8 @@ describe('Routes for /todo resources', () => {
 						console.log(res.text);
 						expect(res.text).to.exist;
 						// expect(res).to.have.property('message').eql('The todo with id 5a95d10d26deea15d4e9b8a1 has been deleted');
-						done();
+						
+					done();
 					});
 			});
 		});
