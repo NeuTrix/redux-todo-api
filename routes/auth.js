@@ -40,11 +40,11 @@ router.post('/', (req, res) => {
 							_id: user._id 
 						}) 
 					} else {
-						res.status(401)
+						res.status(408)
 							.json({ errors: { form: 'Invalid Credentials' } });
 					}
 			} else {
-				res.status(401)
+				res.status(409)
 					.json({ errors: { form: 'Invalid Credentials' } })
 			}
 	})

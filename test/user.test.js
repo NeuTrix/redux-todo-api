@@ -74,8 +74,7 @@ describe('Routes for /user resources', () => {
 	}); //desc
 
 	// =========== CREATE a new user item
-
-	describe('*** CREATE the POST: "/api/users route" ', () => {
+	describe('*** USER REGISTRATION route POST: "/api/users" ', () => {
 
 		it ('...can post a new user object', (done) => {
 
@@ -150,7 +149,7 @@ describe('Routes for /user resources', () => {
 				}); 	
 		}); 
 
-		it.only ('... won\'t permit a duplicate in FULL', (done) => {
+		it ('... won\'t permit a duplicate in FULL', (done) => {
 			let user = {
 				username: 'Tchalla',
 				emailConfirm: 'tbp@wakanda.com',
@@ -215,6 +214,39 @@ describe('Routes for /user resources', () => {
 				done(); 
 				}); 
 		});
+	});
+
+	// =========== LOGIN a new user (AUTH)
+
+	xdescribe ('The user LOGIN route, "api/auth', () => {
+
+		it ('... can log in a user w/ a pwd & username', (done) => {
+			// console.log(_user)
+			let login = { 
+					identifier: _user.username, 
+					password: _user.password
+				}
+			chai.request(server)
+				.post('/api/auth')
+				.send(login)
+				.end((err, res) => {
+					// console.log(res.body)
+					// console.log(err)
+					expect(res.status).to.eql(200);
+					// expect(res.body).to.be.an('object');					
+					expect(res.body).to.have.property('success')
+						.to.eql(true);
+						done()
+				});
+		});	
+		it ('... can log in a user w/ a pwd and email', () => {
+
+		});	
+
+		it ('... returns a JWT token', () => {
+
+		});	
+
 	});
 });
 

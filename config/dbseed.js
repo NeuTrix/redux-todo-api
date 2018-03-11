@@ -33,7 +33,7 @@ const Clear =() => {
 	User.remove({ },(err) => {
 			(err) => console.error.bind(console) 
 		});
-	// console.log('** db Cleared **')
+	return console.log('** db Cleared **')
 }
 
 // ========= The Seed Module
