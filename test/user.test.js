@@ -15,23 +15,23 @@ chai.use(chaiHttp);
 
 describe('Routes for /user resources', () => {
 
-
 	const _profile = {
 		username: 'Tchalla',
 		email: 'tbp@wakanda.com',
 		password: 'black-panther'
 	};
 
-	before(() => {
+	beforeEach(() => {
 		dbSeed.Seed(3);
+		new User(_profile)
 	}); 
 
-	after(() => {
+	afterEach(() => {
 		dbSeed.Clear();
 	});
 
 	// =========== READ an index of all user
-	describe.only('*** READ index of all users: "api/users" route', () => {
+	describe.only('*** READ the GET:"api/users route" ', () => {
 
 		it('... returns a list of all current users', (done) => {
 			chai.request(server)
@@ -47,7 +47,7 @@ describe('Routes for /user resources', () => {
 	});
 
 	// =========== CREATE a new user item
-	describe.only('*** CREATE a new user item: "/api/users" route', () => {
+	describe.only('*** CREATE the POST: "/api/users route" ', () => {
 
 		it('...can post a new user object', (done) => {
 
@@ -66,19 +66,24 @@ describe('Routes for /user resources', () => {
 				done(); 
 				}); 	
 		}); 
-
-			it ('', () => {
-
-			});
 	});
 		
 	// =========== FIND a specific user item
-	xdescribe('*** READ a specific user item: "/users/:id" route', () => {
-		it('... can find a specific user item', (done) => {
-			let _user = new User(_task);
-			let testTask;
+	xdescribe('*** READ the GET "/users/:id" route', () => {
 
-			_user.save((err, user) => {
+			it ('finds hime', (done) => {
+
+		User.findOne({username: "Tchalla"},(user) => {
+			console.log(user)
+		});
+		done()
+			});
+		// User.findOne({ },(err, user) => {
+			// let _id = user.id
+			// console.log(_id)
+		// console.log(user)
+		/*	it('... can find a specific user item', (done) => {
+
 				chai.request(server)
 					.get('/api/users/' + user.id)
 					.send(user)
@@ -89,11 +94,11 @@ describe('Routes for /user resources', () => {
 						expect(res.body).to.have.property('completed');
 						expect(res.body).to.have.property('completed');
 					done();
-					}); 
-			}); 
-		}); 
+				}); //chai*/
+			// }); //it
+		// }); // User
+	}); //desc
 
-	}); 
 
 	// =========== UPDATE a specific user  
 	describe('*** UPDATE a specific user: "/users/:id" route', () => {
