@@ -22,8 +22,12 @@ describe('Routes for /user resources', () => {
 		password_digest: 'somethingrandomgoeshere'
 	}; 
 
+	let _user
 	beforeEach(() => {
+		dbSeed.Clear();
 		dbSeed.Seed(3);
+		_user = new User(_profile)
+			_user.save()
 	}); 
 
 	afterEach(() => {
@@ -72,19 +76,13 @@ describe('Routes for /user resources', () => {
 	describe('*** READ the GET "/users/:id" route', () => {
 
 			it.only ('finds him', (done) => {
-				let black = new User(_profile)
-					black.save()
-				// console.log(black)
-					let id = black._id
-
-
 				chai.request(server)
-					.get('/api/users/' + id)
+					.get('/api/users/' + _user._id)
 					.end((err, res) => {
 						expect(res.status).to.eql(200);
 						expect(res.body).to.be.an('object');
 						expect(res.body).to.have.property('username')
-							.to.eql(_profile.username);
+							.to.eql(_user.username);
 						// expect(res.body).to.have.property('email');
 						// expect(res.body).to.have.property('completed');
 					done()
