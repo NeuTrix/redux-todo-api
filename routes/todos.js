@@ -36,7 +36,7 @@ router.post('/', authenticate,  (req, res) => {
 });
 
 // ========= * READ a specific todo item
-router.get('/:id', (req, res) => {
+router.get('/:id', authenticate, (req, res) => {
 
 	Todo.findById(
 		req.params.id, 
@@ -50,7 +50,7 @@ router.get('/:id', (req, res) => {
 });
 
 // ========= * UPDATE a specific item
-router.put ('/:id', (req, res) => {
+router.put ('/:id', authenticate, (req, res) => {
 
 		Todo.findByIdAndUpdate (
 			req.params.id, 
@@ -68,7 +68,7 @@ router.put ('/:id', (req, res) => {
 );
 
 // ========= * DELETE a specific item
-router.delete('/:id', (req, res) => {
+router.delete('/:id', authenticate, (req, res) => {
 
 	Todo.findByIdAndRemove(req.params.id, (err, todo) => {
 
