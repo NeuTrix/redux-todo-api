@@ -26,7 +26,6 @@ router.post('/', (req, res) => {
 				let bHash = user.password_digest
 				let verified = bcrypt.compareSync(password, bHash)
 					if (verified) {
-
 						 const token = jwt.sign({
 							 	// do not include any private info for a token
 							 	id: user._id,

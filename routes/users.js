@@ -49,7 +49,9 @@ router.post('/', (req, res) => {
 		const { errors, isValid } = commonValidations (req.body)
 
 		if (!isValid) {
+			
 			res.status(400).json(errors)
+
 		} else {
 			
 			const { email, username, password } = req.body;
