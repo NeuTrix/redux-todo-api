@@ -18,7 +18,7 @@ router.get('/', (req, res) => {
 });
 
 // ========= * CREATE a new todo item
-router.post('/', authenticate,  (req, res) => {
+router.post('/',   (req, res) => {
 
 	let _todo = new Todo(req.body);
 
