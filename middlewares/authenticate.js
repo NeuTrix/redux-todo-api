@@ -1,6 +1,5 @@
-
 module.exports = (req, res, next) => {
-	const authorizationHeader = req.headers['Authorization'];
+	const authorizationHeader = req.headers['authorization'];
 	let token;
 
 	if (authorizationHeader) {
