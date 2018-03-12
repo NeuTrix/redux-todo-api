@@ -20,7 +20,7 @@ router.get('/', (req, res) => {
 // ========= * CREATE a new todo item
 
 // router.post('/',  (req, res) => { // sans auth
-router.post('/', authenticate,  (req, res) => {
+router.post('/',  (req, res) => {
 
 	let _todo = new Todo(req.body);
 
@@ -36,7 +36,7 @@ router.post('/', authenticate,  (req, res) => {
 });
 
 // ========= * READ a specific todo item
-router.get('/:id', authenticate, (req, res) => {
+router.get('/:id', (req, res) => {
 
 	Todo.findById(
 		req.params.id, 
@@ -50,7 +50,7 @@ router.get('/:id', authenticate, (req, res) => {
 });
 
 // ========= * UPDATE a specific item
-router.put ('/:id', authenticate, (req, res) => {
+router.put ('/:id', (req, res) => {
 
 		Todo.findByIdAndUpdate (
 			req.params.id, 
@@ -68,7 +68,7 @@ router.put ('/:id', authenticate, (req, res) => {
 );
 
 // ========= * DELETE a specific item
-router.delete('/:id', authenticate, (req, res) => {
+router.delete('/:id', (req, res) => {
 
 	Todo.findByIdAndRemove(req.params.id, (err, todo) => {
 
