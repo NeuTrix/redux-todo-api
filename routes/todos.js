@@ -50,7 +50,25 @@ router.get('/:id', (req, res) => {
 });
 
 // ========= * UPDATE a specific item
-router.put ('/:id', (req, res) => {
+router.put('/:id', (req, res) => {
+
+	let id = req.params.id;
+	
+	Todo.findById( id, (err, todo) => {
+			if(!todo) {
+				return res.status(500).json({error:`This item with id: ${id} does not exist. \n Error produced: ${err} `});
+			} else {
+				Todo.update({id: todo._id})
+				let message = {
+					text: `The todo with id ${todo._id} has been UPDATED`
+				}
+				console.log("***it's gone")
+				return res.status(200).send(message.text);
+			}
+	});
+});
+
+/*router.put ('/:id', (req, res) => {
 
 		Todo.findByIdAndUpdate (
 			req.params.id, 
@@ -65,7 +83,7 @@ router.put ('/:id', (req, res) => {
 					todo);
 		});
 	}
-);
+);*/
 
 // ========= * DELETE a specific item
 router.delete('/:id', (req, res) => {
@@ -78,7 +96,7 @@ router.delete('/:id', (req, res) => {
 			} else {
 				Todo.remove({id: todo._id})
 				let message = {
-					text: `The todo with id ${todo._id} has been deleted`
+					text: `The todo with id ${todo._id} has been DELETED`
 				}
 				console.log("***it's gone")
 				return res.status(200).send(message.text);
