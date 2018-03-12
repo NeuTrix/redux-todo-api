@@ -53,37 +53,22 @@ router.get('/:id', (req, res) => {
 router.put('/:id', (req, res) => {
 
 	let id = req.params.id;
+	let item = req.body
 	
-	Todo.findById( id, (err, todo) => {
-			if(!todo) {
-				return res.status(500).json({error:`This item with id: ${id} does not exist. \n Error produced: ${err} `});
-			} else {
-				Todo.update({id: todo._id})
-				let message = {
-					text: `The todo with id ${todo._id} has been UPDATED`
-				}
-				console.log("***it's gone")
-				return res.status(200).send(message.text);
-			}
+	Todo.findByIdAndUpdate (id, item, { new: true }, (err, todo ) => {
+		if (!todo) {
+			return res.status(500)
+				.json({ error:`No item with id: ${id}. Error: ${err}` });
+		} else { 
+			err ? res.status(500).send(err) : res.status(200).send({
+				success: true, 
+				message: `Successfully updated item with id: ${id} `,
+				todo 
+			});
+		}
 	});
+
 });
-
-/*router.put ('/:id', (req, res) => {
-
-		Todo.findByIdAndUpdate (
-			req.params.id, 
-			req.body, 
-			{ new: true }, 
-			(err, todo ) => {
-
-			if(err) {
-				res.status(500).send(err);
-			}
-				res.status(200).send(
-					todo);
-		});
-	}
-);*/
 
 // ========= * DELETE a specific item
 router.delete('/:id', (req, res) => {
