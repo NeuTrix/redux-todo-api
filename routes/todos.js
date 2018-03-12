@@ -1,6 +1,8 @@
 /* eslint-env node, mocha */
 let express = require('express');
 let router = express.Router();
+let authenticate = require('../middlewares/authenticate')
+
 let Todo = require('../models/todo');
 
 // ========== * READ a list of all todos
@@ -16,7 +18,7 @@ router.get('/', (req, res) => {
 });
 
 // ========= * CREATE a new todo item
-router.post('/', (req, res) => {
+router.post('/',  (req, res) => {
 
 	let _todo = new Todo(req.body);
 
