@@ -19,7 +19,7 @@ router.get('/', (req, res) => {
 
 // ========= * CREATE a new todo item
 
-// router.post('/',  (req, res) => { // sans auth
+// router.post('/', authenticate, (req, res) => { // with auth
 router.post('/',  (req, res) => {
 
 	let _todo = new Todo(req.body);
@@ -67,7 +67,6 @@ router.put('/:id', (req, res) => {
 			});
 		}
 	});
-
 });
 
 // ========= * DELETE a specific item
@@ -87,7 +86,6 @@ router.delete('/:id', (req, res) => {
 				return res.status(200).send(message.text);
 			}
 	});
-
 });
 
 module.exports = router;
