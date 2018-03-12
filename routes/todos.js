@@ -30,7 +30,6 @@ router.post('/', authenticate,  (req, res) => {
 		} else {
 			res.status(201).send({
 				todo,
-				user: req.currentUser
 			});
 		}
 	});
