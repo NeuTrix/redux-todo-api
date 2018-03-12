@@ -75,7 +75,7 @@ router.delete('/:id', (req, res) => {
 
 	let id = req.params.id;
 	
-	Todo.findById( id, (err, todo) => {
+	Todo.findByIdAndRemove( id, (err, todo) => {
 			if(!todo) {
 				return res.status(500).json({error:`This item with id: ${id} does not exist. Error produced: ${err} `});
 			} else {
