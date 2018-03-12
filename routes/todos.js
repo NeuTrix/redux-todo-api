@@ -70,17 +70,19 @@ router.put ('/:id', (req, res) => {
 // ========= * DELETE a specific item
 router.delete('/:id', (req, res) => {
 
-	Todo.findByIdAndRemove(req.params.id, (err, todo) => {
-
-		if(err) {
-			return res.status(500).send(err)
-		} else {
-			let message = {
-				text: `The todo with id ${todo._id} has been deleted`
+	let id = req.params.id;
+	
+	Todo.findById( id, (err, todo) => {
+			if(!todo) {
+				return res.status(500).json({error:`This item with id: ${id} does not exist. Error produced: ${err} `});
+			} else {
+				Todo.remove({id: todo._id})
+				let message = {
+					text: `The todo with id ${todo._id} has been deleted`
+				}
+				console.log("***it's gone")
+				return res.status(200).send(message.text);
 			}
-			console.log("***it's gone")
-			return res.status(200).send(message.text);
-		}
 	});
 
 });
