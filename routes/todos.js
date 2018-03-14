@@ -4,7 +4,6 @@ let router = express.Router();
 let Todo = require('../models/todo');
 let authenticate = require('../middlewares/authenticate')
 
-
 // ========== * READ a list of all todos
 router.get('/', (req, res) => {
 	// res.send('the GET/ rte');
