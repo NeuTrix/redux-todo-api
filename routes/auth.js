@@ -1,4 +1,3 @@
-
 /* eslint-env node, mocha */
 let express = require('express');
 let passport = require('passport');

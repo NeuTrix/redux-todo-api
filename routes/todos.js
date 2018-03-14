@@ -29,6 +29,7 @@ router.post('/', authenticate, (req, res) => { // with auth
 			res.status(500).send(err);
 		} else {
 			res.status(201).send({
+				user: req.currentUser,
 				todo,
 			});
 		}
