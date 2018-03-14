@@ -16,7 +16,8 @@ router.get('/login', function(req, res) {
 	res.render('login', { user: req.user });
 })
 
-router.post('/login', passport.authenticate('local'), function(req, res) {
+router.post('/login', function(req, res) {
+// router.post('/login', passport.authenticate('local'), function(req, res) {
 	res.redirect('/');
 })
 
