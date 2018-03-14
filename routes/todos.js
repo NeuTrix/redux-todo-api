@@ -4,7 +4,6 @@ let router = express.Router();
 let authenticate = require('../middlewares/authenticate')
 
 let Todo = require('../models/todo');
-let authenticate = require('../middlewares/authenticate')
 
 // ========== * READ a list of all todos
 router.get('/', (req, res) => {
@@ -20,8 +19,8 @@ router.get('/', (req, res) => {
 
 // ========= * CREATE a new todo item
 
-// router.post('/', authenticate, (req, res) => { // with auth
-router.post('/',  (req, res) => {
+router.post('/', authenticate, (req, res) => { // with auth
+// router.post('/',  (req, res) => {
 
 	let _todo = new Todo(req.body);
 

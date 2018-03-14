@@ -6,10 +6,10 @@ let validateInput = require('../helpers/signupValidator');
 let bcrypt = require('bcrypt');
 let jwt = require('jsonwebtoken')
 let config = require('../config/auth')
+let router = express.Router();
 
 let User = require('../models/user');
 
-let router = express.Router();
 
 // ========== * READ a list of all users
 
