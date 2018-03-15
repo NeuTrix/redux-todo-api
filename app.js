@@ -55,6 +55,9 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 // +++++++++ mongoose +++++++++ 
+// local db
+// let mongoDB = 'mongodb://localhost/test'
+
 // default db  
 let mongoDB = 'mongodb://Tester:test2015@ds135537.mlab.com:35537/react-redux-todo';
 

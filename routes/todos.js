@@ -8,7 +8,8 @@ let Todo = require('../models/todo');
 // ========== * READ a list of all todos
 router.get('/', (req, res) => {
 	// res.send('the GET/ rte');
-	Todo.find({ },(err, todos) => {
+	Todo.find({ })
+	.exec((err, todos) => {
 		if(err) {
 			res.status(500).send(err);
 		} else {
@@ -37,15 +38,34 @@ router.post('/', authenticate, (req, res) => { // with auth
 });
 
 // ========= * READ a specific todo item
-router.get('/:id', authenticate,(req, res) => {
+// router.get('/:id', authenticate,(req, res) => {
 
-	Todo.findById(
-		req.params.id, 
+// 	Todo.findById(
+// 		req.params.id, 
+// 		(err, todo) => {
+// 			if(err) {
+// 				res.status(500).send(err);
+// 			} else {
+// 				res.status(200).send(todo);
+// 			}
+// 	});
+// });
+
+// +++++++++ TEST  +++++++++ 
+
+// ========= * READ a specific todo item w/owner
+router.get('/:owner_id', authenticate,(req, res) => {
+// router.get('/:id', authenticate,(req, res) => {
+	// let _user = req.currentUser
+	// Todo.find(req.params.owner_id)
+	Todo.find({'owner': req.params.owner_id})
+	// .populate()
+		.exec( 
 		(err, todo) => {
 			if(err) {
 				res.status(500).send(err);
 			} else {
-				res.status(200).send(todo);
+				res.status(200).send(todos);
 			}
 	});
 });

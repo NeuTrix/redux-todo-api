@@ -1,8 +1,9 @@
 var mongoose = require('mongoose');
 var passportLocalMongoose = require('passport-local-mongoose');
+var Schema = mongoose.Schema
 
 // create the schema
-var UserSchema = new mongoose.Schema({
+var UserSchema = new Schema({
 
 		email: { 
 			default: null,
@@ -21,7 +22,11 @@ var UserSchema = new mongoose.Schema({
 			type: String, 
 			required: true, 
 			index: { unique: true } 
-		}
+		},
+		todos : [{
+			type: Schema.Types.ObjectId,
+			ref: 'Todo'
+		}]
 
 });
 

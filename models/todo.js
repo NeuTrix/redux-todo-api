@@ -9,7 +9,6 @@ var TodoSchema = new Schema({
 	},
 	date: { type: Date, default: '1936-05-24' },
 	details: { type: String, default: "Default Details" },
-	owner: { type: String, default: "Default Owner" },
 	rank: { type: String, default: "Med" },
 	task: {
 		type: String,
@@ -17,6 +16,10 @@ var TodoSchema = new Schema({
 		required: [ 
 		true, "Please add a Task" ]
 	},
+	owner: { 
+		type: Schema.Types.ObjectId, 
+		ref: 'User',
+	}
 });
 
 // create a Model

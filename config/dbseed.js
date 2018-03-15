@@ -8,8 +8,13 @@ let mongoose = require('mongoose');
 
 // ========= test db
 // let mongoDB = 'mongodb://Tester:test2015@ds239117.mlab.com:39117/todo-test-db';
+
+// +++++++++ mongoose +++++++++ 
+// local db
+let mongoDB = 'mongodb://localhost/test'
+
 // ========= default db
-let mongoDB = 'mongodb://Tester:test2015@ds135537.mlab.com:35537/react-redux-todo';
+// let mongoDB = 'mongodb://Tester:test2015@ds135537.mlab.com:35537/react-redux-todo';
 
 // establish pending connection to db
 mongoose.connect(mongoDB);
@@ -41,37 +46,37 @@ const Clear =() => {
 
 const Seed = (count) => {
 
-_.times(count,() => {
-
-	let _task = {
-		owner: faker.name.lastName(),
-		task: faker.lorem.sentence(),
-		details: faker.lorem.paragraph(),
-		rank: faker.random.arrayElement(['High', 'Med', 'Low']),
-		date: faker.date.future(),
-		completed: faker.random.boolean()
-	};
-
 	let _profile = {
-		username: faker.name.findName(),
-		email: faker.internet.email(),
-		password_digest: faker.internet.password()
-	};
+			username: faker.name.findName(),
+			email: faker.internet.email(),
+			password_digest: faker.internet.password()
+		};
 
-	let _todo = new Todo(_task)
-	_todo.save((err, todo) => {
-		// console.log(todo)
-		err  => console.log(err) 
-		
+		let _user = new User(_profile)
+		_user.save((err, user) => {
+			err  => console.log(err) 
+			console.log(user)
+		})
+
+	_.times(count,() => {
+
+		let _task = {
+			owner: _user._id,
+			task: faker.lorem.sentence(),
+			details: faker.lorem.paragraph(),
+			rank: faker.random.arrayElement(['High', 'Med', 'Low']),
+			date: faker.date.future(),
+			completed: faker.random.boolean(),
+			ref: {testId: '1963'}
+
+		};
+
+		let _todo = new Todo(_task)
+		_todo.save((err, todo) => {
+			// console.log(todo)
+			err  => console.log(err) 
+		})
 	})
-
-	let _user = new User(_profile)
-	_user.save((err, user) => {
-		err  => console.log(err) 
-		// console.log(user)
-	})
-})
-
 }
 
 module.exports = { 
