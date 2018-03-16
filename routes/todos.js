@@ -5,29 +5,10 @@ let authenticate = require('../middlewares/authenticate')
 
 let Todo = require('../models/todo');
 
-// ========== * READ a list of all todos
-// router.get('/', (req, res) => {
-// 	Todo.find()
-// 	.exec((err, todos) => {
-// 		if(err) {
-// 			res.status(500).send(err);
-// 		} else {
-// 			res.status(200).send(todos);
-// 		}
-// 	});
-// });
-
-// +++++++++ TEST  +++++++++ 
-
-// ========= * READ a specific todo item w/owner
-// router.get('/:owner_id', authenticate, (req, res) => {
-// router.get('/:id', authenticate,(req, res) => {
+// ========== * READ a list of all todos (User restircted)
 	router.get('/', authenticate, (req, res) => {
 		let user = req.currentUser
 		Todo.find({'owner': user._id})
-	// Todo.find(req.params.owner_id)
-	// Todo.find({'owner': req.params.owner_id})
-	// .populate()
 		.exec( 
 		(err, todos) => {
 			if(err) {
@@ -58,20 +39,18 @@ router.post('/', authenticate, (req, res) => { // with auth
 });
 
 // ========= * READ a specific todo item
-// router.get('/:id', authenticate,(req, res) => {
+router.get('/:id', authenticate,(req, res) => {
 
-// 	Todo.findById(
-// 		req.params.id, 
-// 		(err, todo) => {
-// 			if(err) {
-// 				res.status(500).send(err);
-// 			} else {
-// 				res.status(200).send(todo);
-// 			}
-// 	});
-// });
-
-
+	Todo.findById(
+		req.params.id, 
+		(err, todo) => {
+			if(err) {
+				res.status(500).send(err);
+			} else {
+				res.status(200).send(todo);
+			}
+	});
+});
 
 // ========= * UPDATE a specific item
 router.put('/:id', authenticate, (req, res) => {
