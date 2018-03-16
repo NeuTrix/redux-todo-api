@@ -15,7 +15,7 @@ module.exports = (req, res, next) => {
 			if (err) {
 				res.status(401).json({ error: 'Failed to authenticate' });
 			} else {
-				User.findOne ({ '_id': decoded.id }, { username:1, email:1 })
+				return User.findOne ({ '_id': decoded._id }, { username:1, email:1 })
 				 	.then((user) => {
 						if (!user) {
 							res.status(400).json({ error: 'No such User'})
