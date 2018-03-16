@@ -9,7 +9,6 @@ let router = express.Router();
 
 let User = require('../models/user');
 
-
 // ========== * READ a list of all users
 
 router.post('/', (req, res) => {
@@ -17,26 +16,24 @@ router.post('/', (req, res) => {
 	const { identifier, password } = req.body;
 
 	User.findOne( 
-		{ $or: [ { 'username': identifier }, { 'email': identifier } ] } ,
-	 // 'email username', // uncom- to limit returned values
+		{ $or: [ 
+			{ 'username': identifier }, 
+			{ 'email': identifier } 
+		] } , (err, user) => {
 
-		(err, user) => {
 			if(user) {
 				let bHash = user.password_digest
 				let verified = bcrypt.compareSync(password, bHash)
 					if (verified) {
 						 const token = jwt.sign({
 							 	// do not include any private info for a token
-							 	id: user._id,
+							 	_id: user._id,
 							 	username: user.username
 						 }, config.jwtSecret);
 
 						res.status(200).json( { 
 							token,
 							success: true, 
-							
-							/*username: user.username,
-							_id: user._id */
 						}) 
 					} else {
 						res.status(400)
