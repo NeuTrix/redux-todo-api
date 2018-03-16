@@ -11,10 +11,10 @@ let mongoose = require('mongoose');
 
 // +++++++++ mongoose +++++++++ 
 // local db
-let mongoDB = 'mongodb://localhost/test'
+// let mongoDB = 'mongodb://localhost/test'
 
 // ========= default db
-// let mongoDB = 'mongodb://Tester:test2015@ds135537.mlab.com:35537/react-redux-todo';
+let mongoDB = 'mongodb://Tester:test2015@ds135537.mlab.com:35537/react-redux-todo';
 
 // establish pending connection to db
 mongoose.connect(mongoDB);
@@ -68,12 +68,11 @@ const Seed = (count) => {
 			date: faker.date.future(),
 			completed: faker.random.boolean(),
 			ref: {testId: '1963'}
-
 		};
 
 		let _todo = new Todo(_task)
 		_todo.save((err, todo) => {
-			// console.log(todo)
+			console.log(todo)
 			err  => console.log(err) 
 		})
 	})
