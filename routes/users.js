@@ -102,8 +102,9 @@ router.post('/', (req, res) => {
 // ========= * READ a specific user item
 router.get('/:id', (req, res) => {
 
-	User.findById(
-		req.params.id, 
+	User.findOne(
+		{ _id: req.params.id} ,
+		{ password_digest: 0 },
 		(err, user) => {
 			if(err) {
 				res.status(500).send(err);
@@ -136,7 +137,7 @@ router.delete('/:id', (req, res) => {
 
 	let id = req.params.id;
 	
-	User.findByIdAndRemove( id, (err, user) => {
+	User.findByIdAndRemove( id,(err, user) => {
 			if(!user) {
 				return res.status(500).json({error:`This item with id: ${ id } does not exist. Error produced: ${ err } `});
 			} else {
