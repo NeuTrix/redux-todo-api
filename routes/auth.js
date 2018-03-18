@@ -27,20 +27,16 @@ router.post('/register', (req, res) => {
 			const { email, username, password } = req.body;
 
 			bcrypt.hash(password, 10)
-				.then(
-					password_digest => {
-						new User ({ email, password_digest, username })
-						.save()
-				  	.then(user => res.json({ 
-				  		success: true, 
-				  		email: user.email,
-					  	_id: user._id, 
-					  	username: username,
-					  }))
-			 		.catch(err => res.status(501)
-			 		.send({ error: err.message }))
+				.then ( (password_digest) => {
+					return new User ({ email, password_digest, username })
+					.save()
 				})
-				
+		  	.then((user) => res.json({ 
+		  		success: true, 
+		  		email: user.email,
+			  	_id: user._id, 
+			  	username: username,
+			  }))
 		 		.catch(err => res.status(501).json({ error: err.message }))
 		};
 });
