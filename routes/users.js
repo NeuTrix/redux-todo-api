@@ -101,13 +101,13 @@ router.post('/', (req, res) => {
 
 // ========= * READ a specific user item
 router.get('/:id', (req, res) => {
-
+	const _id = req.params.id
 	User.findOne(
-		{ _id: req.params.id} ,
+		{ _id: _id} ,
 		{ password_digest: 0 },
 		(err, user) => {
-			if(err) {
-				res.status(500).send(err);
+			if(!user) {
+				res.status(500).send({error: true, text: `The user with id: ${ _id } does not exist`});
 			} else {
 				res.status(200).send(user);
 			}
