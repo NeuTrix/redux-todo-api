@@ -63,8 +63,9 @@ router.post('/', (req, res) => {
 						.save()
 				  	.then(user => res.json({ 
 				  		success: true, 
+				  		email: user.email,
+					  	_id: user._id, 
 					  	username: username,
-					  	_id: user._id 
 					  }))
 			 		.catch(err => res.status(501)
 			 		.send({ error: err.message }))
@@ -133,19 +134,18 @@ router.put('/:id', (req, res) => {
 // ========= * DELETE a specific item
 router.delete('/:id', (req, res) => {
 
-	User.findByIdAndRemove(req.params.id, (error, user) => {
-
-		if(error) {
-			return res.status(500).send(err)
-		} else {
-			let message = {
-				text: `The user with id ${user._id} has been deleted`
+	let id = req.params.id;
+	
+	User.findByIdAndRemove( id, (err, user) => {
+			if(!user) {
+				return res.status(500).json({error:`This item with id: ${ id } does not exist. Error produced: ${ err } `});
+			} else {
+				User.remove({id: user._id})
+				let message = {
+					text: `The user ${ user.username } with id ${ user._id } has been DELETED`
+				}
+				return res.status(200).send(message.text);
 			}
-			console.log("***it's gone")
-			return res.status(200).send(message.text);
-		}
 	});
-
 });
-
 module.exports = router;
