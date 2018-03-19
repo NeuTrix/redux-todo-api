@@ -11,36 +11,6 @@ let router = express.Router();
 let User = require('../models/user');
 
 
-// +++++++++  User Registration  +++++++++ 
-
-
-router.post('/register', (req, res) => {
-	/*validateInput(req.body, commonValidations).then(({ errors, isValid }) => {*/
-		const { errors, isValid } = commonValidations (req.body)
-
-		if (!isValid) {
-			
-			res.status(400).json(errors)
-
-		} else {
-			
-			const { email, username, password } = req.body;
-
-			bcrypt.hash(password, 10)
-				.then ( (password_digest) => {
-					return new User ({ email, password_digest, username })
-					.save()
-				})
-		  	.then((user) => res.json({ 
-		  		success: true, 
-		  		email: user.email,
-			  	_id: user._id, 
-			  	username: username,
-			  }))
-		 		.catch(err => res.status(501).json({ error: err.message }))
-		};
-});
-
 // +++++++++  User LOGIN  +++++++++ 
 
 router.post('/login', (req, res) => {
@@ -79,6 +49,52 @@ router.post('/login', (req, res) => {
 });
 
 
+// +++++++++  User Registration  +++++++++ 
+
+router.post('/register', (req, res) => {
+	/*validateInput(req.body, commonValidations).then(({ errors, isValid }) => {*/
+		const { errors, isValid } = commonValidations (req.body)
+
+		if (!isValid) {
+			
+			res.status(400).json(errors)
+
+		} else {
+			
+			const { email, username, password } = req.body;
+
+			bcrypt.hash(password, 10)
+				.then ( (password_digest) => {
+					return new User ({ email, password_digest, username })
+					.save()
+				})
+			  .then((user) => {
+			  	// +++++++++   +++++++++ 
+					let bHash = user.password_digest
+					let verified = bcrypt.compareSync(password, bHash)
+
+					if (verified) {
+						 const token = jwt.sign({
+							 	_id: user._id,
+							 	username: user.username
+						 }, config.jwtSecret);
+						 
+						res.status(200).json( { 
+							token,
+							success: true, 
+							_id: user._id, 
+				  		email: user.email,
+					  	username: user.username,
+						}) 
+					} else {
+						res.status(400)
+							.json({ errors: { form: 'Invalid Credentials' } });
+					}
+// +++++++++   +++++++++ 
+			  })
+		 		.catch(err => res.status(501).json({ error: err.message }))
+		};
+});
 
 
 module.exports = router;
