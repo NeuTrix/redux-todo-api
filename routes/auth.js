@@ -34,8 +34,10 @@ router.post('/login', (req, res) => {
 						 }, config.jwtSecret);
 
 						res.status(200).json( { 
-							token,
 							success: true, 
+						 	_id: user._id,
+						 	username: user.username,
+							token,
 						}) 
 					} else {
 						res.status(400)
