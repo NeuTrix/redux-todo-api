@@ -1,5 +1,2 @@
-module.exports  = {
-	jwtSecret: 'someSecretToHideLater'
-}
 
-export
+export JWT_SECRET="someSecretToHideLater"
