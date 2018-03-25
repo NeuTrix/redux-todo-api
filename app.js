@@ -1,4 +1,8 @@
 /* eslint-env node, es6, JSX */
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').load()
+}
+
 let bodyParser = require('body-parser');
 let cookieParser = require('cookie-parser');
 let cors = require('cors');
@@ -77,6 +81,8 @@ db.on('error', console.error.bind(console, 'connection error:'));
 // db.once('open', function() {
 // console.log("we're connected!");
 // });
+
+
 
 // +++++++++ error handling  +++++++++ 
 

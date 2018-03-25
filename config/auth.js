@@ -1,3 +1,7 @@
+
 module.exports  = {
-	jwtSecret: 'someSecretToHideLater'
+
+	jwtSecret: process.env.JWT_SECRET
+
 }
+
