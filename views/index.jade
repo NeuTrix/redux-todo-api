@@ -1,10 +1,7 @@
 extends layout
 
 block content
-  if (!user)
-    a(href="/login") Login
-    br
-    a(href="/register") Register
-  if (user)
-    p You are currently logged in as #{user.username}
-    a(href="/logout") Logout
+
+	h1 Welcome to the MERN Todo API
+	h3 Please click the link below to see the docs 
+	a(href= "https://documenter.getpostman.com/view/2246102/collection/RVnb9GaY") API Documentation
