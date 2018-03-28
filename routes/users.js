@@ -1,6 +1,8 @@
 /* eslint-env node, mocha */
 let express = require('express');
 let passport = require('passport');
+let authenticate = require('../middlewares/authenticate')
+
 let bcrypt = require('bcrypt');
 let isEmpty = require('lodash/isEmpty');
 
@@ -27,9 +29,8 @@ const validateInput = function(data, otherValidations) {
 	return { errors, isValid: isEmpty(errors)};
 }
 
-
 // ========== * READ a list of all users
-router.get('/', (req, res) => {
+router.get('/', authenticate, (req, res) => {
 	// res.send('the GET/ rte');
 	User.find({ },(err, users) => {
 		if(err) {
@@ -41,7 +42,7 @@ router.get('/', (req, res) => {
 });
 
 // ========= * READ a specific user item
-router.get('/:id', (req, res) => {
+router.get('/:id', authenticate, (req, res) => {
 	const _id = req.params.id
 	User.findOne(
 		{ _id: _id} ,
@@ -56,7 +57,7 @@ router.get('/:id', (req, res) => {
 });
 
 // ========= * UPDATE a specific item
-router.put('/:id', (req, res) => {
+router.put('/:id', authenticate, (req, res) => {
 
 		User.findByIdAndUpdate (
 			req.params.id, 
@@ -74,7 +75,7 @@ router.put('/:id', (req, res) => {
 );
 
 // ========= * DELETE a specific item
-router.delete('/:id', (req, res) => {
+router.delete('/:id', authenticate, (req, res) => {
 
 	let id = req.params.id;
 	

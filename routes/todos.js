@@ -39,15 +39,20 @@ router.post('/', authenticate, (req, res) => { // with auth
 });
 
 // ========= * READ a specific todo item
-router.get('/:id', authenticate,(req, res) => {
+router.get('/:id', authenticate, (req, res) => {
 
+	const _id = req.params.id 
 	Todo.findById(
-		req.params.id, 
+		{ _id: _id} ,
 		(err, todo) => {
-			if(err) {
-				res.status(500).send(err);
+			if(!todo) {
+				res.status(500).send({error: true, text: `The todo item with id: ${ _id } does not exist`});
 			} else {
-				res.status(200).send(todo);
+					res.status(200).send({
+				success: true, 
+				message: `Successfully found the item with id: ${id} `,
+				todo 
+			});
 			}
 	});
 });
