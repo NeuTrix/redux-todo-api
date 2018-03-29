@@ -1,18 +1,20 @@
 # redux-todo-api
-to do api server to support CRUD redux/react project
+This is the api portion of a decoupled MERN CRUD project in the form of a [Todo list client]()
 
+## API Documentaion
+
+Please click [here]() for documentation for the API
 
 ## starting the server
-- internet connection live
-- run `mongod` in the CLI (separate window)
-- run `npm start`
+- `yarn` or `npm install` to download required packages
+- run `npm start` to boot up the api
+- default PORT is `8080`
+
+## Tech Stack
+- Mongo
+- Mongoose
+- Express
+- bcrypt
+
+## Testing (WIP)
 - run `npm test` or `npm t` to run test suite
-
-
-## Resources
-- Authentication with passport npm
--- http://mherman.org/blog/2015/01/31/local-authentication-with-passport-and-express-4/#.WphknZPwYWo
-
-
-## Testing
-- From the CLI, run `make test`
