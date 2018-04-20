@@ -20,10 +20,7 @@ let Todo = require('../models/todo');
 });
 
 // ========= * CREATE a new todo item
-
 router.post('/', authenticate, (req, res) => { // with auth
-// router.post('/',  (req, res) => {
-
 	let _todo = new Todo(req.body);
 
 	_todo.save((err, todo) => {

@@ -1,6 +1,5 @@
 /* eslint-env node, mocha */
 let express = require('express');
-let passport = require('passport');
 let validateInput = require('../helpers/signupValidator');
 let commonValidations = require('../helpers/signupValidator');
 let bcrypt = require('bcrypt');
@@ -10,9 +9,7 @@ let router = express.Router();
 
 let User = require('../models/user');
 
-
 // +++++++++  User LOGIN  +++++++++ 
-
 router.post('/login', (req, res) => {
 
 	const { identifier, password } = req.body;
@@ -50,17 +47,12 @@ router.post('/login', (req, res) => {
 	})
 });
 
-
 // +++++++++  User Registration  +++++++++ 
-
 router.post('/register', (req, res) => {
-	/*validateInput(req.body, commonValidations).then(({ errors, isValid }) => {*/
 		const { errors, isValid } = commonValidations (req.body)
 
 		if (!isValid) {
-			
 			res.status(400).json(errors)
-
 		} else {
 			
 			const { email, username, password } = req.body;
@@ -71,7 +63,6 @@ router.post('/register', (req, res) => {
 					.save()
 				})
 			  .then((user) => {
-			  	// +++++++++   +++++++++ 
 					let bHash = user.password_digest
 					let verified = bcrypt.compareSync(password, bHash)
 
@@ -92,11 +83,9 @@ router.post('/register', (req, res) => {
 						res.status(400)
 							.json({ errors: { form: 'Invalid Credentials' } });
 					}
-// +++++++++   +++++++++ 
 			  })
 		 		.catch(err => res.status(501).json({ error: err.message }))
 		};
 });
-
 
 module.exports = router;

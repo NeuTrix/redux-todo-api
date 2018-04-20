@@ -2,12 +2,12 @@
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').load()
 }
+// let favicon = require('serve-favicon');
 
 let bodyParser = require('body-parser');
 let cookieParser = require('cookie-parser');
 let cors = require('cors');
 let express = require('express');
-// let favicon = require('serve-favicon');
 let LocalStrategy = require('passport-local').Strategy
 let logger = require('morgan');
 let mongoose = require('mongoose');
