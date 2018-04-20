@@ -11,10 +11,10 @@ let mongoose = require('mongoose');
 
 // +++++++++ mongoose +++++++++ 
 // local db
-// let mongoDB = 'mongodb://localhost/test'
+let mongoDB = 'mongodb://localhost/test'
 
 // ========= default db
-let mongoDB = 'mongodb://Tester:test2015@ds135537.mlab.com:35537/react-redux-todo';
+// let mongoDB = 'mongodb://Tester:test2015@ds135537.mlab.com:35537/react-redux-todo';
 
 // establish pending connection to db
 mongoose.connect(mongoDB);
