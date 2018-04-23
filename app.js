@@ -4,6 +4,7 @@ if (process.env.NODE_ENV !== 'production') {
 }
 // let favicon = require('serve-favicon');
 
+let dbConnection = require('./helpers/dbConnection')
 let bodyParser = require('body-parser');
 let cookieParser = require('cookie-parser');
 let cors = require('cors');
@@ -59,15 +60,8 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 // +++++++++ mongoose +++++++++ 
-// local db
-let mongoDB = 'mongodb://localhost/test'
-
-// default db  
-// let mongoDB = 'mongodb://Tester:test2015@ds135537.mlab.com:35537/react-redux-todo';
-
-// test db 
-// let mongoDB = 'mongodb://Tester:test2015@ds239117.mlab.com:39117/todo-test-db';
-
+// connection to imported db constant
+let mongoDB = dbConnection
 // establish pending connection to db
 mongoose.connect(mongoDB);
 // use the global Promise library
@@ -77,12 +71,6 @@ mongoose.Promise = global.Promise;
 let db = mongoose.connection;
 
 db.on('error', console.error.bind(console, 'connection error:'));
-
-// db.once('open', function() {
-// console.log("we're connected!");
-// });
-
-
 
 // +++++++++ error handling  +++++++++ 
 
@@ -104,7 +92,7 @@ if (app.get('env') === 'development') {
 	})
 }
 
-// +++++++++ production erro handler: no stacktraces leaked to user
+// +++++++++ production error handler: no stacktraces leaked to user
 app.use(function(err, req, res, next) {
     res.status(err.status || 500);
     res.render('error', {
