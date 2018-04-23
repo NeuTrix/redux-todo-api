@@ -1,25 +1,19 @@
 let Todo = require('../models/todo');
 let User = require('../models/user');
+
 let _ = require('lodash');
 let Promise = require('bluebird');
 let faker = require('faker');
 
 let mongoose = require('mongoose');
 
-// ========= test db
-// let mongoDB = 'mongodb://Tester:test2015@ds239117.mlab.com:39117/todo-test-db';
-
-// +++++++++ mongoose +++++++++ 
-// local db
-let mongoDB = 'mongodb://localhost/test'
-
-// ========= default db
-// let mongoDB = 'mongodb://Tester:test2015@ds135537.mlab.com:35537/react-redux-todo';
+//  to Test db only
+let mongoDB = 'mongodb://Tester:test2015@ds239117.mlab.com:39117/todo-test-db';
 
 // establish pending connection to db
 mongoose.connect(mongoDB);
 // use the global Promise library
-// mongoose.Promise = global.Promise;
+mongoose.Promise = global.Promise;
 // default connection
 let db = mongoose.connection;
 
