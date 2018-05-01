@@ -55,9 +55,9 @@ app.use('/api/users', users);
 
 // +++++++++ passport config +++++++++
 var User = require('./models/user') 
-passport.use(new LocalStrategy(User.authenticate()));
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
+// passport.use(new LocalStrategy(User.authenticate()));
+// passport.serializeUser(User.serializeUser());
+// passport.deserializeUser(User.deserializeUser());
 
 // +++++++++ mongoose +++++++++ 
 // connection to imported db constant
